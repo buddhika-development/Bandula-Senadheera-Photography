@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
+import { CallNoticeModal } from "@/components/ui";
 
 interface MarqueePhoto {
   id: string;
@@ -97,6 +99,8 @@ const col3 = [PHOTOS[7], PHOTOS[8], PHOTOS[9]];
 const col4 = [PHOTOS[10], PHOTOS[0], PHOTOS[2], PHOTOS[5]];
 
 export default function MarqueeGallerySection() {
+  const [isCallModalOpen, setIsCallModalOpen] = useState(false);
+
   return (
     <section className="relative min-h-[90vh] py-24 bg-black overflow-hidden flex items-center justify-center">
       {/* Background Infinite Scrolling Marquee Wall */}
@@ -222,22 +226,31 @@ export default function MarqueeGallerySection() {
           </div>
 
           {/* CTA Action Buttons */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3.5">
             <a
-              href="#gallery"
-              className="px-8 py-4 rounded-full bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
+              href="#contact"
+              className="px-7 py-3.5 rounded-full bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
             >
-              View Full Gallery
+              Book A Call
             </a>
-            <a
-              href="#about"
-              className="px-8 py-4 rounded-full border border-white/30 text-white font-semibold text-xs uppercase tracking-widest hover:bg-white/10 hover:border-white transition-all duration-300"
+            <button
+              onClick={() => setIsCallModalOpen(true)}
+              className="px-7 py-3.5 rounded-full border border-amber-300/40 bg-amber-500/10 text-amber-200 font-semibold text-xs uppercase tracking-widest hover:bg-amber-500/20 hover:border-amber-300 transition-all duration-300 flex items-center gap-2 cursor-pointer backdrop-blur-sm shadow-lg shadow-amber-950/20"
             >
-              Learn The Story
-            </a>
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              Call Now
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Call Notice Modal */}
+      <CallNoticeModal
+        isOpen={isCallModalOpen}
+        onClose={() => setIsCallModalOpen(false)}
+      />
     </section>
   );
 }
