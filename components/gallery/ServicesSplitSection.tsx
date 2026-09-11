@@ -60,13 +60,13 @@ export default function ServicesSplitSection() {
             </div>
 
             {/* Bottom Content */}
-            <div className="space-y-4 max-w-lg">
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight group-hover:text-amber-100 transition-colors duration-300">
+            <div className="max-w-lg">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight group-hover:text-amber-100 transition-colors duration-500 mb-2">
                 Wedding Photography
               </h3>
 
               {/* Revealable Content on Desktop Hover / Always visible on Mobile */}
-              <div className="transition-all duration-500 ease-out opacity-100 translate-y-0 pointer-events-auto lg:opacity-0 lg:translate-y-4 lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:translate-y-0 lg:group-hover:pointer-events-auto space-y-4">
+              <div className="transition-all duration-700 ease-in-out opacity-100 max-h-[500px] pointer-events-auto lg:opacity-0 lg:max-h-0 lg:overflow-hidden lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:max-h-[500px] lg:group-hover:pointer-events-auto lg:group-hover:overflow-visible space-y-4 pt-2">
                 <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
                   Your wedding day is a sacred masterpiece of unscripted tears, quiet glances, and promises spoken from the heart. We capture every glance and intimate detail so your love story lives forever.
                 </p>
@@ -127,13 +127,13 @@ export default function ServicesSplitSection() {
             </div>
 
             {/* Bottom Content */}
-            <div className="space-y-4 max-w-lg">
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight group-hover:text-emerald-100 transition-colors duration-300">
+            <div className="max-w-lg">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight group-hover:text-emerald-100 transition-colors duration-500 mb-2">
                 Event Photography
               </h3>
 
               {/* Revealable Content on Desktop Hover / Always visible on Mobile */}
-              <div className="transition-all duration-500 ease-out opacity-100 translate-y-0 pointer-events-auto lg:opacity-0 lg:translate-y-4 lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:translate-y-0 lg:group-hover:pointer-events-auto space-y-4">
+              <div className="transition-all duration-700 ease-in-out opacity-100 max-h-[500px] pointer-events-auto lg:opacity-0 lg:max-h-0 lg:overflow-hidden lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:max-h-[500px] lg:group-hover:pointer-events-auto lg:group-hover:overflow-visible space-y-4 pt-2">
                 <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
                   From high-profile corporate galas to electrifying celebrations, we capture the vibrant spirit, key milestones, and unforgettable atmosphere of your event with cinematic precision.
                 </p>
