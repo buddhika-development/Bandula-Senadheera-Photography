@@ -72,3 +72,43 @@ body {
   font-family: var(--font-signature), cursive;
 }
 
+/* Marquee & Infinite Scroll Animations */
+@keyframes marqueeUp {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes marqueeDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-marquee-up {
+  animation: marqueeUp 40s linear infinite;
+}
+
+.animate-marquee-down {
+  animation: marqueeDown 45s linear infinite;
+}
+
+.animate-marquee-up-fast {
+  animation: marqueeUp 32s linear infinite;
+}
+
+.animate-marquee-down-fast {
+  animation: marqueeDown 36s linear infinite;
+}
+
+.pause-on-hover:hover {
+  animation-play-state: paused;
+}
+
+

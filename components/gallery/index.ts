@@ -1,1 +1,2 @@
-// Export photo gallery & portfolio components here
+export { default as MarqueeGallerySection } from "./MarqueeGallerySection";
+
