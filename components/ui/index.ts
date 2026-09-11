@@ -1,1 +1,2 @@
-// Export UI primitive components here
+export { default as LoadingScreen } from "./LoadingScreen";
+

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,6 +12,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const signatureFont = Great_Vibes({
+  weight: "400",
+  variable: "--font-signature",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Bandula Senadheera Photography",
   description: "Official portfolio of Bandula Senadheera Photography",
@@ -21,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${signatureFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
