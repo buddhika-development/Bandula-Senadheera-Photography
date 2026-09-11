@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-signature: var(--font-signature);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +23,107 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
 }
+
+/* Handwriting & Signature Animations */
+@keyframes drawStroke {
+  0% {
+    stroke-dashoffset: 1000;
+    fill-opacity: 0;
+  }
+  70% {
+    stroke-dashoffset: 0;
+    fill-opacity: 0.2;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes drawPen {
+  0% {
+    stroke-dashoffset: 1200;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw-signature {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: drawPen 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.font-signature {
+  font-family: var(--font-signature), cursive;
+}
+
+/* Marquee & Infinite Scroll Animations */
+@keyframes marqueeUp {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes marqueeDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-marquee-up {
+  animation: marqueeUp 40s linear infinite;
+}
+
+.animate-marquee-down {
+  animation: marqueeDown 45s linear infinite;
+}
+
+.animate-marquee-up-fast {
+  animation: marqueeUp 32s linear infinite;
+}
+
+.animate-marquee-down-fast {
+  animation: marqueeDown 36s linear infinite;
+}
+
+.pause-on-hover:hover {
+  animation-play-state: paused;
+}
+
+/* Continuous Slow Spin Animation */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 90s linear infinite;
+}
+
+
+
