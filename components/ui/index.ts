@@ -1,2 +1,4 @@
 export { default as LoadingScreen } from "./LoadingScreen";
+export { default as PhotoLightboxModal } from "./PhotoLightboxModal";
+
 

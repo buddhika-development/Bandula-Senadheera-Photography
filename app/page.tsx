@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { LoadingScreen } from "@/components/ui";
-import { MarqueeGallerySection, ServicesSplitSection } from "@/components/gallery";
+import {
+  MarqueeGallerySection,
+  ServicesSplitSection,
+  InteractiveGallerySection,
+} from "@/components/gallery";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,10 +48,10 @@ export default function Home() {
                 Explore Experiences
               </a>
               <a
-                href="#contact"
+                href="#gallery"
                 className="px-8 py-3.5 rounded-full border border-neutral-700 text-neutral-300 text-xs font-semibold uppercase tracking-wider hover:border-white hover:text-white transition-colors duration-300"
               >
-                Get In Touch
+                View Gallery
               </a>
             </div>
           </div>
@@ -61,6 +65,11 @@ export default function Home() {
         {/* Section 3: Infinite Photo Marquee Wall & Showcase */}
         <div id="portfolio">
           <MarqueeGallerySection />
+        </div>
+
+        {/* Section 4: Filterable Interactive Portfolio Gallery & Lightbox Modal */}
+        <div id="gallery">
+          <InteractiveGallerySection />
         </div>
       </div>
     </>
