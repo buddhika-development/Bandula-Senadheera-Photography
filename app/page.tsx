@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { LoadingScreen } from "@/components/ui";
-import { MarqueeGallerySection } from "@/components/gallery";
+import { MarqueeGallerySection, ServicesSplitSection } from "@/components/gallery";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,10 +38,10 @@ export default function Home() {
 
             <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
               <a
-                href="#portfolio"
+                href="#services"
                 className="px-8 py-3.5 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 transition-colors duration-300"
               >
-                Explore Portfolio
+                Explore Experiences
               </a>
               <a
                 href="#contact"
@@ -53,8 +53,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 2: Infinite Photo Marquee Wall & Showcase */}
-        <MarqueeGallerySection />
+        {/* Section 2: Split-Screen Photography Services (Weddings & Events) */}
+        <div id="services">
+          <ServicesSplitSection />
+        </div>
+
+        {/* Section 3: Infinite Photo Marquee Wall & Showcase */}
+        <div id="portfolio">
+          <MarqueeGallerySection />
+        </div>
       </div>
     </>
   );
