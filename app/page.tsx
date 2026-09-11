@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { LoadingScreen } from "@/components/ui";
 import {
   MarqueeGallerySection,
@@ -23,9 +24,20 @@ export default function Home() {
         }`}
       >
         {/* Section 1: Hero */}
-        <section className="min-h-screen flex flex-col items-center justify-center relative">
+        <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
           {/* Subtle Background Lighting Grid */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.08)_0%,transparent_70%)] pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.08)_0%,transparent_70%)] pointer-events-none z-0" />
+
+          {/* Rotating Sri Lankan Traditional Art Background Motif (Protruding from top edge) */}
+          <div className="absolute -top-36 sm:-top-52 md:-top-72 left-1/2 -translate-x-1/2 w-[480px] h-[480px] sm:w-[650px] sm:h-[650px] md:w-[850px] md:h-[850px] opacity-20 hover:opacity-30 transition-opacity duration-700 pointer-events-none z-0">
+            <Image
+              src="/bkacground_sri_lanka_traditional_art.png"
+              alt="Sri Lanka Traditional Art Motif"
+              fill
+              priority
+              className="object-contain animate-spin-slow"
+            />
+          </div>
 
           <div className="relative z-10 text-center max-w-4xl px-6 py-20 flex flex-col items-center gap-6">
             <span className="text-xs uppercase tracking-[0.5em] text-neutral-400 font-light">
