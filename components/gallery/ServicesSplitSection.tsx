@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { CallNoticeModal } from "@/components/ui";
 
 export default function ServicesSplitSection() {
   const [hoveredSide, setHoveredSide] = useState<"wedding" | "event" | null>(null);
+  const [isCallModalOpen, setIsCallModalOpen] = useState(false);
 
   return (
     <section className="relative w-full min-h-[90vh] bg-black py-12 px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
@@ -85,6 +87,18 @@ export default function ServicesSplitSection() {
                   >
                     See My Other Works
                   </a>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsCallModalOpen(true);
+                    }}
+                    className="p-3 rounded-full border border-amber-300/40 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20 hover:border-amber-300 transition-all duration-300 cursor-pointer backdrop-blur-sm shadow-lg shadow-amber-950/20 hover:scale-110"
+                    title="Call Now (+94 71 561 3103)"
+                  >
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
@@ -152,6 +166,18 @@ export default function ServicesSplitSection() {
                   >
                     See My Other Works
                   </a>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsCallModalOpen(true);
+                    }}
+                    className="p-3 rounded-full border border-amber-300/40 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20 hover:border-amber-300 transition-all duration-300 cursor-pointer backdrop-blur-sm shadow-lg shadow-amber-950/20 hover:scale-110"
+                    title="Call Now (+94 71 561 3103)"
+                  >
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
@@ -220,6 +246,12 @@ export default function ServicesSplitSection() {
           </a>
         </div>
       </div>
+
+      {/* Call Notice Modal */}
+      <CallNoticeModal
+        isOpen={isCallModalOpen}
+        onClose={() => setIsCallModalOpen(false)}
+      />
     </section>
   );
 }

@@ -193,11 +193,6 @@ export default function MarqueeGallerySection() {
       {/* Foreground Attention-Grabbing Glassmorphic Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         <div className="backdrop-blur-xl bg-black/60 border border-white/15 rounded-3xl p-8 sm:p-12 md:p-16 shadow-2xl shadow-black/80 flex flex-col items-center">
-          {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 bg-white/5 text-xs text-neutral-300 tracking-[0.35em] uppercase font-mono mb-6">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            Visual Storytelling
-          </div>
 
           {/* Headline */}
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-tight max-w-2xl">
