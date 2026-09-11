@@ -100,7 +100,7 @@ export default function MarqueeGallerySection() {
   return (
     <section className="relative min-h-[90vh] py-24 bg-black overflow-hidden flex items-center justify-center">
       {/* Background Infinite Scrolling Marquee Wall */}
-      <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 gap-4 px-4 opacity-30 sm:opacity-40 hover:opacity-60 transition-opacity duration-700 pointer-events-none">
+      <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 gap-4 px-4 opacity-60 sm:opacity-70 hover:opacity-90 transition-opacity duration-700 pointer-events-none">
         {/* Column 1 - Moves UP */}
         <div className="overflow-hidden relative h-full">
           <div className="flex flex-col gap-4 animate-marquee-up">
@@ -183,8 +183,8 @@ export default function MarqueeGallerySection() {
       </div>
 
       {/* Top & Bottom Vignette Overlay for Smooth Fade */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/40 to-black pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.5)_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/30 to-black pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.3)_0%,rgba(0,0,0,0.85)_100%)] pointer-events-none" />
 
       {/* Foreground Attention-Grabbing Glassmorphic Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
