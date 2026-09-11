@@ -65,24 +65,27 @@ export default function ServicesSplitSection() {
                 Wedding Photography
               </h3>
 
-              <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
-                Your wedding day is a sacred masterpiece of unscripted tears, quiet glances, and promises spoken from the heart. We capture every glance and intimate detail so your love story lives forever.
-              </p>
+              {/* Revealable Content on Desktop Hover / Always visible on Mobile */}
+              <div className="transition-all duration-500 ease-out opacity-100 translate-y-0 pointer-events-auto lg:opacity-0 lg:translate-y-4 lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:translate-y-0 lg:group-hover:pointer-events-auto space-y-4">
+                <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                  Your wedding day is a sacred masterpiece of unscripted tears, quiet glances, and promises spoken from the heart. We capture every glance and intimate detail so your love story lives forever.
+                </p>
 
-              {/* Action Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-3">
-                <a
-                  href="#contact"
-                  className="px-6 py-3 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
-                >
-                  Book A Call
-                </a>
-                <a
-                  href="#portfolio"
-                  className="px-6 py-3 rounded-full border border-white/30 text-white text-xs font-semibold uppercase tracking-wider hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm"
-                >
-                  See My Other Works
-                </a>
+                {/* Action Buttons */}
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <a
+                    href="#contact"
+                    className="px-6 py-3 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
+                  >
+                    Book A Call
+                  </a>
+                  <a
+                    href="#portfolio"
+                    className="px-6 py-3 rounded-full border border-white/30 text-white text-xs font-semibold uppercase tracking-wider hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm"
+                  >
+                    See My Other Works
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -129,24 +132,27 @@ export default function ServicesSplitSection() {
                 Event Photography
               </h3>
 
-              <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
-                From high-profile corporate galas to electrifying celebrations, we capture the vibrant spirit, key milestones, and unforgettable atmosphere of your event with cinematic precision.
-              </p>
+              {/* Revealable Content on Desktop Hover / Always visible on Mobile */}
+              <div className="transition-all duration-500 ease-out opacity-100 translate-y-0 pointer-events-auto lg:opacity-0 lg:translate-y-4 lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:translate-y-0 lg:group-hover:pointer-events-auto space-y-4">
+                <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                  From high-profile corporate galas to electrifying celebrations, we capture the vibrant spirit, key milestones, and unforgettable atmosphere of your event with cinematic precision.
+                </p>
 
-              {/* Action Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-3">
-                <a
-                  href="#contact"
-                  className="px-6 py-3 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
-                >
-                  Book A Call
-                </a>
-                <a
-                  href="#portfolio"
-                  className="px-6 py-3 rounded-full border border-white/30 text-white text-xs font-semibold uppercase tracking-wider hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm"
-                >
-                  See My Other Works
-                </a>
+                {/* Action Buttons */}
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <a
+                    href="#contact"
+                    className="px-6 py-3 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
+                  >
+                    Book A Call
+                  </a>
+                  <a
+                    href="#portfolio"
+                    className="px-6 py-3 rounded-full border border-white/30 text-white text-xs font-semibold uppercase tracking-wider hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm"
+                  >
+                    See My Other Works
+                  </a>
+                </div>
               </div>
             </div>
           </div>
