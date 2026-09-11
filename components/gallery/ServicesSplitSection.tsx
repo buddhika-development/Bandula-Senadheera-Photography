@@ -67,8 +67,9 @@ export default function ServicesSplitSection() {
                 Wedding Photography
               </h3>
 
-              <div className="transition-all duration-700 ease-in-out opacity-100 max-h-[500px] pointer-events-auto lg:opacity-0 lg:max-h-0 lg:overflow-hidden lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:max-h-[500px] lg:group-hover:pointer-events-auto lg:group-hover:overflow-visible space-y-4 pt-2">
-                <p className="text-xs sm:text-sm text-neutral-200 font-light leading-relaxed drop-shadow">
+              {/* Revealable Content: Always visible on Mobile (< lg); Smooth Hover Reveal on Desktop (lg) */}
+              <div className="space-y-4 pt-2 transition-all duration-500 ease-out opacity-100 visible pointer-events-auto lg:opacity-0 lg:invisible lg:max-h-0 lg:overflow-hidden lg:pointer-events-none group-hover:lg:opacity-100 group-hover:lg:visible group-hover:lg:max-h-[300px] group-hover:lg:overflow-visible group-hover:lg:pointer-events-auto">
+                <p className="text-xs sm:text-sm text-neutral-200 font-light leading-relaxed">
                   Your wedding day is a sacred masterpiece of unscripted tears, quiet glances, and promises spoken from the heart. We capture every glance and intimate detail so your love story lives forever.
                 </p>
 
@@ -148,8 +149,9 @@ export default function ServicesSplitSection() {
                 Event Photography
               </h3>
 
-              <div className="transition-all duration-700 ease-in-out opacity-100 max-h-[500px] pointer-events-auto lg:opacity-0 lg:max-h-0 lg:overflow-hidden lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:max-h-[500px] lg:group-hover:pointer-events-auto lg:group-hover:overflow-visible space-y-4 pt-2">
-                <p className="text-xs sm:text-sm text-neutral-200 font-light leading-relaxed drop-shadow">
+              {/* Revealable Content: Always visible on Mobile (< lg); Smooth Hover Reveal on Desktop (lg) */}
+              <div className="space-y-4 pt-2 transition-all duration-500 ease-out opacity-100 visible pointer-events-auto lg:opacity-0 lg:invisible lg:max-h-0 lg:overflow-hidden lg:pointer-events-none group-hover:lg:opacity-100 group-hover:lg:visible group-hover:lg:max-h-[300px] group-hover:lg:overflow-visible group-hover:lg:pointer-events-auto">
+                <p className="text-xs sm:text-sm text-neutral-200 font-light leading-relaxed">
                   From high-profile corporate galas to electrifying celebrations, we capture the vibrant spirit, key milestones, and unforgettable atmosphere of your event with cinematic precision.
                 </p>
 
