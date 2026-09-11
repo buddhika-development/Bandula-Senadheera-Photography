@@ -75,12 +75,15 @@ export default function ServicesSplitSection() {
 
                 {/* Action Buttons */}
                 <div className="pt-2 flex flex-wrap items-center gap-3">
-                  <a
-                    href="#contact"
-                    className="px-6 py-3 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsCallModalOpen(true);
+                    }}
+                    className="px-6 py-3 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10 cursor-pointer"
                   >
                     Book A Call
-                  </a>
+                  </button>
                   <a
                     href="#portfolio"
                     className="px-6 py-3 rounded-full border border-white/30 text-white text-xs font-semibold uppercase tracking-wider hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm"
@@ -154,12 +157,15 @@ export default function ServicesSplitSection() {
 
                 {/* Action Buttons */}
                 <div className="pt-2 flex flex-wrap items-center gap-3">
-                  <a
-                    href="#contact"
-                    className="px-6 py-3 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsCallModalOpen(true);
+                    }}
+                    className="px-6 py-3 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10 cursor-pointer"
                   >
                     Book A Call
-                  </a>
+                  </button>
                   <a
                     href="#portfolio"
                     className="px-6 py-3 rounded-full border border-white/30 text-white text-xs font-semibold uppercase tracking-wider hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm"

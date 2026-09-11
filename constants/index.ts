@@ -6,6 +6,7 @@ export const SITE_CONFIG = {
   contactEmail: "contact@bandulasenadheera.com",
   phoneDisplay: "+94 71 561 3103",
   phoneRaw: "+94715613103",
+  schedulerLink: "https://calendar.app.google/5uZXpCfNZ91wi4JD9",
   socials: {
     instagram: "https://instagram.com/bandulasenadheera",
     facebook: "https://facebook.com/bandulasenadheeraphotography",

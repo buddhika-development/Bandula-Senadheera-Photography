@@ -222,12 +222,12 @@ export default function MarqueeGallerySection() {
 
           {/* CTA Action Buttons */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3.5">
-            <a
-              href="#contact"
-              className="px-7 py-3.5 rounded-full bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10"
+            <button
+              onClick={() => setIsCallModalOpen(true)}
+              className="px-7 py-3.5 rounded-full bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/10 cursor-pointer"
             >
               Book A Call
-            </a>
+            </button>
             <button
               onClick={() => setIsCallModalOpen(true)}
               className="px-7 py-3.5 rounded-full border border-amber-300/40 bg-amber-500/10 text-amber-200 font-semibold text-xs uppercase tracking-widest hover:bg-amber-500/20 hover:border-amber-300 transition-all duration-300 flex items-center gap-2 cursor-pointer backdrop-blur-sm shadow-lg shadow-amber-950/20"
