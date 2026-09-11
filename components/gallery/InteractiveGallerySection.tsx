@@ -135,7 +135,7 @@ export default function InteractiveGallerySection() {
   };
 
   return (
-    <section className="relative w-full min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-between">
+    <section className="relative w-full min-h-screen bg-black py-28 sm:py-36 md:py-44 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-between">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-8">
         <span className="text-xs uppercase tracking-[0.4em] text-neutral-400 font-mono block mb-2">

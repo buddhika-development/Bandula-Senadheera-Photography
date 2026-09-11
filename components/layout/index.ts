@@ -1,1 +1,1 @@
-// Export layout components (Header, Footer, Navbar) here
+export { default as Footer } from "./Footer";
