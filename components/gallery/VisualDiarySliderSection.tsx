@@ -1,315 +1,246 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Play, Pause, Maximize2 } from "lucide-react";
 import { Photo } from "@/types";
 import { FullScreenCollectionModal, PhotoCollection } from "@/components/ui";
+
+const DUAL_SHOWCASE_PHOTOS: Photo[] = [
+  {
+    id: "dual-1",
+    title: "Eternal Bridal Moment",
+    category: "Wedding",
+    imageUrl: "/jeremy-wong-weddings-464ps_nOflw-unsplash.jpg",
+  },
+  {
+    id: "dual-2",
+    title: "Golden Hour Embrace",
+    category: "Wedding",
+    imageUrl: "/jonathan-borba-mvasDnG41is-unsplash.jpg",
+  },
+  {
+    id: "dual-3",
+    title: "Cinematic Portraiture",
+    category: "Portrait",
+    imageUrl: "/hisu-lee-FTW8ADj5igs-unsplash.jpg",
+  },
+  {
+    id: "dual-4",
+    title: "Electric Gala Celebration",
+    category: "Event",
+    imageUrl: "/sandy-millar-8vaQKYnawHw-unsplash.jpg",
+  },
+  {
+    id: "dual-5",
+    title: "Authentic Unscripted Romance",
+    category: "Love Story",
+    imageUrl: "/jonathan-borba-aC5_EFhq7Fs-unsplash.jpg",
+  },
+  {
+    id: "dual-6",
+    title: "Fine Art Shadow Play",
+    category: "Fine Art",
+    imageUrl: "/nikita-shirokov-7wjxyiUvt4I-unsplash.jpg",
+  },
+  {
+    id: "dual-7",
+    title: "Destination Horizon",
+    category: "Travel",
+    imageUrl: "/elvis-bekmanis-WJc87MVcDaA-unsplash.jpg",
+  },
+  {
+    id: "dual-8",
+    title: "Mountain Serenity",
+    category: "Landscape",
+    imageUrl: "/luigi-pozzoli-jZrfY30y6Kc-unsplash.jpg",
+  },
+  {
+    id: "dual-9",
+    title: "Pure Heirloom Elegance",
+    category: "Wedding",
+    imageUrl: "/getulio-moraes-jbtbin3u0Xw-unsplash.jpg",
+  },
+  {
+    id: "dual-10",
+    title: "Fine Art Silhouette",
+    category: "Portrait",
+    imageUrl: "/ulyana-tim-AbnCRgL2DNs-unsplash.jpg",
+  },
+];
 
 const COLLECTIONS: PhotoCollection[] = [
   {
     id: "luxury-weddings",
     name: "Luxury Weddings",
-    photos: [
-      {
-        id: "w-1",
-        title: "Eternal Promises",
-        category: "Wedding",
-        imageUrl: "/jeremy-wong-weddings-464ps_nOflw-unsplash.jpg",
-      },
-      {
-        id: "w-2",
-        title: "Golden Hour Embrace",
-        category: "Wedding",
-        imageUrl: "/jonathan-borba-mvasDnG41is-unsplash.jpg",
-      },
-      {
-        id: "w-3",
-        title: "Timeless Devotion",
-        category: "Wedding",
-        imageUrl: "/getulio-moraes-jbtbin3u0Xw-unsplash.jpg",
-      },
-      {
-        id: "w-4",
-        title: "Unscripted Love",
-        category: "Wedding",
-        imageUrl: "/jonathan-borba-aC5_EFhq7Fs-unsplash.jpg",
-      },
-    ],
+    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Wedding"),
   },
   {
     id: "cinematic-portraits",
     name: "Cinematic Portraits",
-    photos: [
-      {
-        id: "p-1",
-        title: "Soulful Eyes",
-        category: "Portrait",
-        imageUrl: "/hisu-lee-FTW8ADj5igs-unsplash.jpg",
-      },
-      {
-        id: "p-2",
-        title: "Fine Art Silhouette",
-        category: "Portrait",
-        imageUrl: "/ulyana-tim-AbnCRgL2DNs-unsplash.jpg",
-      },
-      {
-        id: "p-3",
-        title: "Nature Introspection",
-        category: "Portrait",
-        imageUrl: "/luigi-pozzoli-jZrfY30y6Kc-unsplash.jpg",
-      },
-      {
-        id: "p-4",
-        title: "Ambient Horizon",
-        category: "Portrait",
-        imageUrl: "/elvis-bekmanis-WJc87MVcDaA-unsplash.jpg",
-      },
-    ],
+    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Portrait"),
   },
   {
     id: "grand-events",
     name: "Grand Events",
-    photos: [
-      {
-        id: "e-1",
-        title: "Electric Gala Night",
-        category: "Event",
-        imageUrl: "/sandy-millar-8vaQKYnawHw-unsplash.jpg",
-      },
-      {
-        id: "e-2",
-        title: "Stage Atmosphere",
-        category: "Event",
-        imageUrl: "/jakob-owens-mLIurLmSRAY-unsplash.jpg",
-      },
-      {
-        id: "e-3",
-        title: "Celebration Moments",
-        category: "Event",
-        imageUrl: "/jeremy-wong-weddings-464ps_nOflw-unsplash.jpg",
-      },
-      {
-        id: "e-4",
-        title: "Shared Joy",
-        category: "Event",
-        imageUrl: "/jonathan-borba-mvasDnG41is-unsplash.jpg",
-      },
-    ],
+    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Event"),
   },
   {
     id: "fine-art-editorial",
     name: "Fine Art Editorial",
-    photos: [
-      {
-        id: "f-1",
-        title: "Dramatic Shadow Play",
-        category: "Fine Art",
-        imageUrl: "/nikita-shirokov-7wjxyiUvt4I-unsplash.jpg",
-      },
-      {
-        id: "f-2",
-        title: "Heirloom Elegance",
-        category: "Fine Art",
-        imageUrl: "/ulyana-tim-AbnCRgL2DNs-unsplash.jpg",
-      },
-      {
-        id: "f-3",
-        title: "Intimate Framing",
-        category: "Fine Art",
-        imageUrl: "/hisu-lee-FTW8ADj5igs-unsplash.jpg",
-      },
-      {
-        id: "f-4",
-        title: "Ethereal Light",
-        category: "Fine Art",
-        imageUrl: "/getulio-moraes-jbtbin3u0Xw-unsplash.jpg",
-      },
-    ],
+    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Fine Art"),
   },
   {
     id: "destination-stories",
     name: "Destination Stories",
-    photos: [
-      {
-        id: "d-1",
-        title: "Coastal Wanderer",
-        category: "Destination",
-        imageUrl: "/elvis-bekmanis-WJc87MVcDaA-unsplash.jpg",
-      },
-      {
-        id: "d-2",
-        title: "Mountain Serenity",
-        category: "Destination",
-        imageUrl: "/luigi-pozzoli-jZrfY30y6Kc-unsplash.jpg",
-      },
-      {
-        id: "d-3",
-        title: "Romantic Escape",
-        category: "Destination",
-        imageUrl: "/jonathan-borba-aC5_EFhq7Fs-unsplash.jpg",
-      },
-      {
-        id: "d-4",
-        title: "Tropical Sunrise",
-        category: "Destination",
-        imageUrl: "/jonathan-borba-mvasDnG41is-unsplash.jpg",
-      },
-    ],
+    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Travel" || p.category === "Landscape"),
   },
 ];
 
 export default function VisualDiarySliderSection() {
-  const [activeCollectionIndex, setActiveCollectionIndex] = useState(0);
+  const [leftIndex, setLeftIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isFullScreenOpen, setIsFullScreenOpen] = useState(false);
-  const [fullScreenPhotoIndex, setFullScreenPhotoIndex] = useState(0);
+  const [fullScreenCollectionId, setFullScreenCollectionId] = useState("luxury-weddings");
 
-  const activeCollection = COLLECTIONS[activeCollectionIndex];
+  const total = DUAL_SHOWCASE_PHOTOS.length;
+  const rightIndex = (leftIndex + 1) % total;
 
-  // Helper to handle previous/next collection navigation in the 3D coverflow
-  const handlePrevCollection = () => {
-    setActiveCollectionIndex(
-      (prev) => (prev - 1 + COLLECTIONS.length) % COLLECTIONS.length
-    );
+  const leftPhoto = DUAL_SHOWCASE_PHOTOS[leftIndex];
+  const rightPhoto = DUAL_SHOWCASE_PHOTOS[rightIndex];
+
+  // Automatic slideshow transition
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      setLeftIndex((prev) => (prev + 1) % total);
+    }, 3800);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, total]);
+
+  const handlePrev = () => {
+    setLeftIndex((prev) => (prev - 1 + total) % total);
   };
 
-  const handleNextCollection = () => {
-    setActiveCollectionIndex((prev) => (prev + 1) % COLLECTIONS.length);
+  const handleNext = () => {
+    setLeftIndex((prev) => (prev + 1) % total);
   };
 
-  const openFullScreenModal = (collectionIdx: number, photoIdx: number = 0) => {
-    setActiveCollectionIndex(collectionIdx);
-    setFullScreenPhotoIndex(photoIdx);
+  const openFullScreenModal = () => {
     setIsFullScreenOpen(true);
   };
 
   return (
-    <section className="relative w-full bg-black py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background Radial Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06)_0%,transparent_70%)] pointer-events-none z-0" />
+    <section className="relative w-full bg-black py-10 sm:py-16 md:py-24 px-3 sm:px-6 md:px-10 overflow-hidden">
+      {/* Background Radial Ambient Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,transparent_70%)] pointer-events-none z-0" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
-        {/* Section Header Matching Reference Screenshot */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-          <span className="text-[11px] uppercase tracking-[0.4em] text-neutral-400 font-mono block mb-2">
-            GALLERY
-          </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
-            My Visual Diary
-          </h2>
-          <p className="mt-3 text-xs sm:text-sm md:text-base text-neutral-400 font-light leading-relaxed">
-            See the world through my lens: adventures in photos and videos
-          </p>
+      <div className="relative z-10 w-full max-w-[1920px] mx-auto flex flex-col items-center">
+        {/* Dual Split-Screen Section (Left-Handed & Right-Handed Image Frames) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 w-full">
+          {/* Left-Handed Image Section */}
+          <div
+            onClick={openFullScreenModal}
+            className="group relative w-full h-[450px] sm:h-[600px] md:h-[700px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/15 bg-neutral-950 cursor-pointer shadow-2xl transition-all duration-500 hover:border-white/40"
+          >
+            <Image
+              key={`left-${leftPhoto.id}`}
+              src={leftPhoto.imageUrl}
+              alt={leftPhoto.title}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-center w-full h-full transition-all duration-1000 ease-out group-hover:scale-105"
+            />
+            {/* Ambient Hover Overlay & Minimal View Icon */}
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <div className="p-4 rounded-full bg-black/70 border border-white/30 text-white backdrop-blur-md transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-2xl">
+                <Maximize2 className="w-6 h-6" />
+              </div>
+            </div>
+          </div>
+
+          {/* Right-Handed Image Section */}
+          <div
+            onClick={openFullScreenModal}
+            className="group relative w-full h-[450px] sm:h-[600px] md:h-[700px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/15 bg-neutral-950 cursor-pointer shadow-2xl transition-all duration-500 hover:border-white/40"
+          >
+            <Image
+              key={`right-${rightPhoto.id}`}
+              src={rightPhoto.imageUrl}
+              alt={rightPhoto.title}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-center w-full h-full transition-all duration-1000 ease-out group-hover:scale-105"
+            />
+            {/* Ambient Hover Overlay & Minimal View Icon */}
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <div className="p-4 rounded-full bg-black/70 border border-white/30 text-white backdrop-blur-md transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-2xl">
+                <Maximize2 className="w-6 h-6" />
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Collection Filter Pills Bar & View Full Gallery CTA */}
-        <div className="w-full flex items-center justify-center flex-wrap gap-2.5 sm:gap-3 mb-10 sm:mb-14">
-          {COLLECTIONS.map((col, idx) => {
-            const isActive = idx === activeCollectionIndex;
-            return (
-              <button
-                key={col.id}
-                onClick={() => openFullScreenModal(idx, 0)}
-                className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                  isActive
-                    ? "bg-white text-black shadow-lg shadow-white/10 scale-105"
-                    : "bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:border-white/30 hover:bg-white/10"
-                }`}
-              >
-                {col.name}
-              </button>
-            );
-          })}
+        {/* Controllers Bar & Bottom View Full Gallery CTA */}
+        <div className="mt-8 sm:mt-12 w-full flex flex-col sm:flex-row items-center justify-between gap-6 px-2">
+          {/* Left / Center Controllers */}
+          <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 backdrop-blur-md">
+            {/* Prev Arrow */}
+            <button
+              onClick={handlePrev}
+              className="p-2 rounded-full hover:bg-white/10 text-neutral-300 hover:text-white transition-colors cursor-pointer"
+              title="Previous Images"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
 
-          {/* View Full Gallery CTA Button matching reference right pill */}
+            {/* Counter */}
+            <span className="text-xs font-mono tracking-widest text-neutral-300">
+              {String(leftIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            </span>
+
+            {/* Next Arrow */}
+            <button
+              onClick={handleNext}
+              className="p-2 rounded-full hover:bg-white/10 text-neutral-300 hover:text-white transition-colors cursor-pointer"
+              title="Next Images"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            <div className="h-4 w-[1px] bg-white/20" />
+
+            {/* Auto-Play Toggle */}
+            <button
+              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              className="text-xs text-neutral-300 hover:text-white flex items-center gap-1.5 font-mono uppercase tracking-wider transition-colors cursor-pointer"
+              title={isAutoPlaying ? "Pause Automatic Slideshow" : "Start Automatic Slideshow"}
+            >
+              {isAutoPlaying ? (
+                <>
+                  <Pause className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Auto On</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-3.5 h-3.5" />
+                  <span>Auto Off</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Primary View Full Gallery Button positioned at the bottom */}
           <button
-            onClick={() => openFullScreenModal(activeCollectionIndex, 0)}
-            className="px-6 py-2.5 rounded-full bg-transparent border border-white text-white text-xs font-semibold uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-lg group"
+            onClick={openFullScreenModal}
+            className="px-8 py-3.5 rounded-full bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-xl shadow-white/10 flex items-center gap-2.5 cursor-pointer group"
           >
             <span>View Full Gallery</span>
-            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-          </button>
-        </div>
-
-        {/* 3D Coverflow Carousel Container */}
-        <div className="relative w-full max-w-5xl h-[360px] sm:h-[480px] md:h-[540px] flex items-center justify-center">
-          {COLLECTIONS.map((collection, idx) => {
-            // Determine relative position from active item
-            const total = COLLECTIONS.length;
-            let offset = idx - activeCollectionIndex;
-
-            // Handle wrap-around math for smooth looping
-            if (offset > Math.floor(total / 2)) offset -= total;
-            if (offset < -Math.floor(total / 2)) offset += total;
-
-            const isCenter = offset === 0;
-            const absOffset = Math.abs(offset);
-
-            // Hide cards beyond 2 positions away
-            if (absOffset > 2) return null;
-
-            const coverPhoto = collection.photos[0];
-
-            return (
-              <div
-                key={collection.id}
-                onClick={() => openFullScreenModal(idx, 0)}
-                className={`absolute transition-all duration-700 ease-out cursor-pointer rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-neutral-900 group ${
-                  isCenter
-                    ? "z-30 w-[240px] sm:w-[340px] md:w-[400px] h-[320px] sm:h-[440px] md:h-[500px] scale-100 shadow-[0_30px_70px_rgba(0,0,0,0.95)] border-white/40 ring-1 ring-white/30"
-                    : absOffset === 1
-                    ? `z-20 w-[200px] sm:w-[280px] md:w-[320px] h-[270px] sm:h-[370px] md:h-[420px] scale-90 opacity-70 ${
-                        offset < 0
-                          ? "-translate-x-[140px] sm:-translate-x-[220px] md:-translate-x-[280px]"
-                          : "translate-x-[140px] sm:translate-x-[220px] md:translate-x-[280px]"
-                      }`
-                    : `z-10 w-[160px] sm:w-[220px] md:w-[250px] h-[220px] sm:h-[300px] md:h-[340px] scale-75 opacity-40 ${
-                        offset < 0
-                          ? "-translate-x-[240px] sm:-translate-x-[360px] md:-translate-x-[440px]"
-                          : "translate-x-[240px] sm:translate-x-[360px] md:translate-x-[440px]"
-                      }`
-                }`}
-              >
-                {/* Full Card Cover Image */}
-                <Image
-                  src={coverPhoto.imageUrl}
-                  alt={collection.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 500px"
-                  priority={isCenter}
-                  className="object-cover object-center w-full h-full transition-transform duration-700 group-hover:scale-105"
-                />
-
-                {/* Subtle Bottom Vignette & Collection Badge */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6">
-                  <span className="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">
-                    {collection.photos.length} Photos
-                  </span>
-                  <h3 className="text-base sm:text-xl font-bold text-white tracking-wide mt-0.5">
-                    {collection.name}
-                  </h3>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Previous / Next Circular Control Arrow Buttons */}
-        <div className="flex items-center gap-4 mt-8 sm:mt-10">
-          <button
-            onClick={handlePrevCollection}
-            className="p-3.5 sm:p-4 rounded-full bg-white/5 hover:bg-white text-white hover:text-black border border-white/20 transition-all duration-300 cursor-pointer shadow-xl backdrop-blur-md"
-            title="Previous Collection"
-          >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-
-          <button
-            onClick={handleNextCollection}
-            className="p-3.5 sm:p-4 rounded-full bg-white/5 hover:bg-white text-white hover:text-black border border-white/20 transition-all duration-300 cursor-pointer shadow-xl backdrop-blur-md"
-            title="Next Collection"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>
@@ -319,8 +250,8 @@ export default function VisualDiarySliderSection() {
         isOpen={isFullScreenOpen}
         onClose={() => setIsFullScreenOpen(false)}
         collections={COLLECTIONS}
-        initialCollectionId={activeCollection.id}
-        initialPhotoIndex={fullScreenPhotoIndex}
+        initialCollectionId={fullScreenCollectionId}
+        initialPhotoIndex={leftIndex}
       />
     </section>
   );

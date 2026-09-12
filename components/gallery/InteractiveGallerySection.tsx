@@ -1,318 +1,196 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { Photo } from "@/types";
 import { PhotoLightboxModal } from "@/components/ui";
+import { Maximize2 } from "lucide-react";
 
-const PORTFOLIO_PHOTOS: Photo[] = [
+interface GalleryPhoto extends Photo {
+  aspectClass?: string;
+  colIndex: number; // 0, 1, 2, 3 for 4-column layout mapping
+}
+
+const MASONRY_PORTFOLIO_PHOTOS: GalleryPhoto[] = [
+  // Column 1 Photos
   {
-    id: "gallery-1",
-    title: "Eternal Promises",
+    id: "sl-1",
+    title: "Kandyan Bridal Elegance",
     category: "Wedding",
-    imageUrl: "/jeremy-wong-weddings-464ps_nOflw-unsplash.jpg",
-    description: "An intimate bridal moment capturing gentle emotions and timeless love.",
+    imageUrl: "/sl_wedding_1.jpg",
+    aspectClass: "h-[380px] sm:h-[440px]",
+    colIndex: 0,
   },
   {
-    id: "gallery-2",
-    title: "Sacred Vows",
+    id: "sl-2",
+    title: "Intricate Kandyan Jewelry",
     category: "Wedding",
-    imageUrl: "/jonathan-borba-mvasDnG41is-unsplash.jpg",
-    description: "A tender embrace captured amidst golden hour natural sunlight.",
+    imageUrl: "/sl_wedding_2.jpg",
+    aspectClass: "h-[320px] sm:h-[380px]",
+    colIndex: 0,
   },
+
+  // Column 2 Photos
   {
-    id: "gallery-3",
-    title: "Romantic Horizon",
+    id: "sl-3",
+    title: "Bridal Preparation",
     category: "Wedding",
-    imageUrl: "/jonathan-borba-aC5_EFhq7Fs-unsplash.jpg",
-    description: "Pure romance set against an ethereal natural landscape.",
+    imageUrl: "/sl_wedding_3.jpg",
+    aspectClass: "h-[180px] sm:h-[220px]",
+    colIndex: 1,
   },
   {
-    id: "gallery-4",
-    title: "Gala Atmosphere",
-    category: "Event",
-    imageUrl: "/sandy-millar-8vaQKYnawHw-unsplash.jpg",
-    description: "High-energy celebration captured with vibrant cinematic lighting.",
+    id: "sl-4",
+    title: "Royal Purple Fine Art Gown",
+    category: "Fine Art",
+    imageUrl: "/sl_wedding_4.jpg",
+    aspectClass: "h-[400px] sm:h-[480px]",
+    colIndex: 1,
   },
   {
-    id: "gallery-5",
-    title: "Unscripted Joy",
-    category: "Event",
-    imageUrl: "/jakob-owens-mLIurLmSRAY-unsplash.jpg",
-    description: "Authentic laughter and shared connection during an iconic evening event.",
+    id: "sl-5",
+    title: "Atmospheric Wood Lighting",
+    category: "Love Story",
+    imageUrl: "/sl_wedding_5.jpg",
+    aspectClass: "h-[220px] sm:h-[260px]",
+    colIndex: 1,
   },
+
+  // Column 3 Photos
   {
-    id: "gallery-6",
-    title: "Soulful Portrait",
+    id: "sl-6",
+    title: "Ethereal Veil Portrait",
     category: "Portrait",
-    imageUrl: "/hisu-lee-FTW8ADj5igs-unsplash.jpg",
-    description: "Intimate portrait focusing on depth, expression, and mood.",
+    imageUrl: "/sl_wedding_6.jpg",
+    aspectClass: "h-[380px] sm:h-[440px]",
+    colIndex: 2,
   },
   {
-    id: "gallery-7",
-    title: "Fine Art Silhouette",
-    category: "Portrait",
-    imageUrl: "/ulyana-tim-AbnCRgL2DNs-unsplash.jpg",
-    description: "Elegant fine-art portrait combining dramatic shadows and light.",
-  },
-  {
-    id: "gallery-8",
-    title: "Nature's Serenity",
-    category: "Landscape",
-    imageUrl: "/luigi-pozzoli-jZrfY30y6Kc-unsplash.jpg",
-    description: "Breathtaking landscape composition showcasing untamed natural beauty.",
-  },
-  {
-    id: "gallery-9",
-    title: "Dramatic Shadows",
-    category: "Editorial",
-    imageUrl: "/nikita-shirokov-7wjxyiUvt4I-unsplash.jpg",
-    description: "Editorial photography exploring shape, atmosphere, and contrast.",
-  },
-  {
-    id: "gallery-10",
-    title: "Coastal Wanderer",
-    category: "Editorial",
-    imageUrl: "/elvis-bekmanis-WJc87MVcDaA-unsplash.jpg",
-    description: "Cinematic destination portrait capturing freedom and horizon.",
-  },
-  {
-    id: "gallery-11",
-    title: "Warm Embrace",
+    id: "sl-7",
+    title: "Outdoor Garden Couple",
     category: "Wedding",
-    imageUrl: "/getulio-moraes-jbtbin3u0Xw-unsplash.jpg",
-    description: "Heartfelt celebration of unity and deep emotional bonds.",
+    imageUrl: "/sl_wedding_7.jpg",
+    aspectClass: "h-[320px] sm:h-[380px]",
+    colIndex: 2,
+  },
+
+  // Column 4 Photos
+  {
+    id: "sl-8",
+    title: "Golden Throne Heirloom Bride",
+    category: "Wedding",
+    imageUrl: "/sl_wedding_8.jpg",
+    aspectClass: "h-[380px] sm:h-[440px]",
+    colIndex: 3,
+  },
+  {
+    id: "sl-9",
+    title: "Velvet & Lace Romance",
+    category: "Wedding",
+    imageUrl: "/sl_wedding_9.jpg",
+    aspectClass: "h-[320px] sm:h-[380px]",
+    colIndex: 3,
   },
 ];
 
-const CATEGORIES = ["All", "Wedding", "Event", "Portrait", "Landscape", "Editorial"];
+const CATEGORIES = ["ALL WORKS", "WEDDING", "PORTRAIT", "EVENT", "FINE ART", "LOVE STORY"];
 
 export default function InteractiveGallerySection() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("ALL WORKS");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const thumbnailContainerRef = useRef<HTMLDivElement>(null);
-
   const filteredPhotos = useMemo(() => {
-    if (selectedCategory === "All") return PORTFOLIO_PHOTOS;
-    return PORTFOLIO_PHOTOS.filter((photo) => photo.category === selectedCategory);
+    if (selectedCategory === "ALL WORKS") return MASONRY_PORTFOLIO_PHOTOS;
+    return MASONRY_PORTFOLIO_PHOTOS.filter(
+      (photo) => photo.category.toUpperCase() === selectedCategory.toUpperCase()
+    );
   }, [selectedCategory]);
 
-  // Auto-play feature
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(() => {
-      setActivePhotoIndex((prev) => (prev + 1) % filteredPhotos.length);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, filteredPhotos.length]);
+  // Distribute filtered photos into 4 columns for exact masonry alignment
+  const columns = useMemo(() => {
+    const col0: GalleryPhoto[] = [];
+    const col1: GalleryPhoto[] = [];
+    const col2: GalleryPhoto[] = [];
+    const col3: GalleryPhoto[] = [];
 
-  // Scroll active thumbnail into view
-  useEffect(() => {
-    if (thumbnailContainerRef.current) {
-      const container = thumbnailContainerRef.current;
-      const activeElement = container.children[activePhotoIndex] as HTMLElement;
-      if (activeElement) {
-        const scrollLeft =
-          activeElement.offsetLeft -
-          container.clientWidth / 2 +
-          activeElement.clientWidth / 2;
-        container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-      }
-    }
-  }, [activePhotoIndex]);
+    filteredPhotos.forEach((photo, idx) => {
+      const colTarget = photo.colIndex % 4;
+      if (colTarget === 0) col0.push(photo);
+      else if (colTarget === 1) col1.push(photo);
+      else if (colTarget === 2) col2.push(photo);
+      else col3.push(photo);
+    });
 
-  const currentPhoto = filteredPhotos[activePhotoIndex] || filteredPhotos[0];
-
-  const handlePrev = () => {
-    setActivePhotoIndex((prev) => (prev - 1 + filteredPhotos.length) % filteredPhotos.length);
-  };
-
-  const handleNext = () => {
-    setActivePhotoIndex((prev) => (prev + 1) % filteredPhotos.length);
-  };
+    return [col0, col1, col2, col3];
+  }, [filteredPhotos]);
 
   return (
-    <section className="relative w-full bg-black py-16 sm:py-24 md:py-28 px-2 sm:px-4 md:px-6 flex flex-col items-center justify-between overflow-hidden">
-      {/* Background radial glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)] pointer-events-none" />
+    <section className="relative w-full bg-black py-12 sm:py-16 md:py-24 px-2 sm:px-4 md:px-6 overflow-hidden">
+      {/* Background Radial Ambient Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,transparent_70%)] pointer-events-none z-0" />
 
-      {/* Category Filter Tabs */}
-      <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-8 max-w-6xl mx-auto z-10">
-        {CATEGORIES.map((cat) => {
-          const isActive = selectedCategory === cat;
-          return (
-            <button
-              key={cat}
-              onClick={() => {
-                setSelectedCategory(cat);
-                setActivePhotoIndex(0);
-              }}
-              className={`px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                isActive
-                  ? "bg-white text-black shadow-lg shadow-white/10 scale-105"
-                  : "bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:border-white/30 hover:bg-white/10"
-              }`}
-            >
-              {cat}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Main Center Stage: Picture Frame & Controller */}
-      <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center">
-        {/* Luxury Frame Container */}
-        <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] max-h-[580px] border-[10px] sm:border-[16px] border-neutral-900 rounded-3xl shadow-[0_30px_70px_rgba(0,0,0,0.95)] bg-neutral-950 overflow-hidden group">
-          {/* Category Badge (Top-Left of Frame) */}
-          <div className="absolute top-4 left-4 z-20">
-            <span className="px-3.5 py-1.5 rounded-full bg-black/75 border border-white/20 backdrop-blur-md text-[11px] font-mono tracking-widest text-neutral-300 uppercase shadow-lg">
-              {currentPhoto.category}
-            </span>
-          </div>
-
-          {/* Expand / Lightbox Button (Top-Right of Frame) */}
-          <button
-            onClick={() => setLightboxIndex(activePhotoIndex)}
-            className="absolute top-4 right-4 z-20 p-3 rounded-full bg-black/75 hover:bg-black border border-white/20 backdrop-blur-md text-white transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer"
-            title="Expand Fullscreen View"
-          >
-            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-              <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
-            </svg>
-          </button>
-
-          {/* Active Image */}
-          <div
-            onClick={() => setLightboxIndex(activePhotoIndex)}
-            className="relative w-full h-full cursor-pointer"
-          >
-            <Image
-              key={currentPhoto.id}
-              src={currentPhoto.imageUrl}
-              alt={currentPhoto.title}
-              fill
-              sizes="(max-width: 1280px) 100vw, 1400px"
-              priority
-              className="object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
-            />
-            {/* Subtle Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
-          </div>
-
-          {/* Controller Arrow Overlay Buttons */}
-          <button
-            onClick={handlePrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3.5 rounded-full bg-black/60 hover:bg-black border border-white/20 text-white/80 hover:text-white backdrop-blur-md transition-all duration-300 hover:scale-110 cursor-pointer"
-            title="Previous Image"
-          >
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-            </svg>
-          </button>
-
-          <button
-            onClick={handleNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3.5 rounded-full bg-black/60 hover:bg-black border border-white/20 text-white/80 hover:text-white backdrop-blur-md transition-all duration-300 hover:scale-110 cursor-pointer"
-            title="Next Image"
-          >
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Controller Bar */}
-        <div className="w-full mt-6 flex items-center justify-between gap-4 px-2">
-          {/* Index Counter */}
-          <span className="text-xs font-mono tracking-widest text-neutral-400">
-            {String(activePhotoIndex + 1).padStart(2, "0")} / {String(filteredPhotos.length).padStart(2, "0")}
-          </span>
-
-          {/* Auto-Play Toggle Button */}
-          <button
-            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className="text-xs text-neutral-300 hover:text-white flex items-center gap-1.5 tracking-wider uppercase font-mono transition-colors cursor-pointer bg-white/5 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md"
-          >
-            {isAutoPlaying ? (
-              <>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                Pause
-              </>
-            ) : (
-              <>
-                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-                Auto-Play
-              </>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Bottom Horizontal Thumbnail Slider Carousel */}
-      <div className="w-full max-w-5xl mx-auto mt-12">
-        <div className="flex items-center justify-between mb-3 px-2">
-          <span className="text-xs uppercase tracking-[0.3em] font-mono text-neutral-400">
-            Exhibition Filmstrip
-          </span>
-          <span className="text-xs text-neutral-500 font-mono">
-            {filteredPhotos.length} Photographs
-          </span>
-        </div>
-
-        {/* Scrollable Thumbnail Strip */}
-        <div
-          ref={thumbnailContainerRef}
-          className="flex items-center gap-4 overflow-x-auto py-3 px-2 scrollbar-none snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {filteredPhotos.map((photo, index) => {
-            const isActive = index === activePhotoIndex;
+      <div className="relative z-10 w-full max-w-[1920px] mx-auto">
+        {/* Category Filter Pills (Clean, Centered) */}
+        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-8 sm:mb-12">
+          {CATEGORIES.map((cat) => {
+            const isActive = selectedCategory === cat;
             return (
-              <div
-                key={photo.id}
-                onClick={() => setActivePhotoIndex(index)}
-                className={`relative flex-shrink-0 w-28 sm:w-36 aspect-[4/3] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 snap-center group ${
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                   isActive
-                    ? "ring-2 ring-amber-400 scale-105 border-transparent shadow-lg shadow-amber-900/40 z-10"
-                    : "opacity-45 hover:opacity-100 border border-white/10 hover:border-white/40"
+                    ? "bg-white text-black shadow-lg shadow-white/10 scale-105"
+                    : "bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:border-white/30 hover:bg-white/10"
                 }`}
               >
-                <Image
-                  src={photo.imageUrl}
-                  alt={photo.title}
-                  fill
-                  sizes="150px"
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                />
-
-                {/* Category Micro Badge */}
-                <div className="absolute top-1.5 left-1.5 z-10">
-                  <span className="px-1.5 py-0.5 rounded bg-black/80 text-[8px] font-mono text-neutral-300 uppercase tracking-wider">
-                    {photo.category}
-                  </span>
-                </div>
-
-                {/* Active Overlay Glow */}
-                {isActive && (
-                  <div className="absolute inset-0 bg-amber-500/10 pointer-events-none" />
-                )}
-              </div>
+                {cat}
+              </button>
             );
           })}
         </div>
+
+        {/* 4-Column Editorial Masonry Layout matching reference image */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full">
+          {columns.map((colPhotos, colIdx) => (
+            <div key={`col-${colIdx}`} className="flex flex-col gap-3 sm:gap-4">
+              {colPhotos.map((photo) => {
+                const globalIndex = filteredPhotos.findIndex((p) => p.id === photo.id);
+                return (
+                  <div
+                    key={photo.id}
+                    onClick={() => setLightboxIndex(globalIndex)}
+                    className={`group relative w-full ${photo.aspectClass} rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 cursor-pointer shadow-xl transition-all duration-500 hover:border-white/40`}
+                  >
+                    {/* Pure High-Res Photo - No Text Overlays */}
+                    <Image
+                      src={photo.imageUrl}
+                      alt={photo.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      className="object-cover object-center w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+
+                    {/* Ambient Hover Lighting & Minimal Zoom Trigger */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="p-3.5 rounded-full bg-black/70 border border-white/30 text-white backdrop-blur-md transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-2xl">
+                        <Maximize2 className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Lightbox Pop-up Modal */}
+      {/* 100vw x 100vh Full Screen Lightbox Modal */}
       <PhotoLightboxModal
         photos={filteredPhotos}
         currentIndex={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
-        onNavigate={(idx) => setLightboxIndex(idx)}
+        onNavigate={(index) => setLightboxIndex(index)}
       />
     </section>
   );
