@@ -135,22 +135,12 @@ export default function InteractiveGallerySection() {
   };
 
   return (
-    <section className="relative w-full min-h-screen bg-black py-28 sm:py-36 md:py-44 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-between">
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-8">
-        <span className="text-xs uppercase tracking-[0.4em] text-neutral-400 font-mono block mb-2">
-          Exhibition Gallery
-        </span>
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
-          Framed Showcase
-        </h2>
-        <p className="mt-3 text-sm sm:text-base text-neutral-400 font-light">
-          Experience Bandula Senadheera&apos;s portfolio enclosed in luxury exhibition frames. Use the bottom slider or controls to browse.
-        </p>
-      </div>
+    <section className="relative w-full bg-black py-16 sm:py-24 md:py-28 px-2 sm:px-4 md:px-6 flex flex-col items-center justify-between overflow-hidden">
+      {/* Background radial glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)] pointer-events-none" />
 
       {/* Category Filter Tabs */}
-      <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-10 max-w-4xl mx-auto z-10">
+      <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-8 max-w-6xl mx-auto z-10">
         {CATEGORIES.map((cat) => {
           const isActive = selectedCategory === cat;
           return (
@@ -160,9 +150,9 @@ export default function InteractiveGallerySection() {
                 setSelectedCategory(cat);
                 setActivePhotoIndex(0);
               }}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+              className={`px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                 isActive
-                  ? "bg-[#8d6e63] text-white shadow-lg shadow-[#8d6e63]/30 scale-105"
+                  ? "bg-white text-black shadow-lg shadow-white/10 scale-105"
                   : "bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:border-white/30 hover:bg-white/10"
               }`}
             >
@@ -172,16 +162,13 @@ export default function InteractiveGallerySection() {
         })}
       </div>
 
-      {/* Main Center Stage: Brown-Toned Picture Frame & Controller */}
-      <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center">
-        {/* Luxury Brown Wood Frame Container */}
-        <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] max-h-[550px] border-[12px] sm:border-[18px] md:border-[22px] border-[#2b1810] rounded-3xl shadow-[0_30px_70px_rgba(0,0,0,0.95)] ring-1 ring-[#6d4c41]/40 bg-[#160d0a] overflow-hidden group">
-          {/* Inner Pass-Partout Shadow Effect */}
-          <div className="absolute inset-0 shadow-[inset_0_0_25px_rgba(0,0,0,0.85)] z-10 pointer-events-none" />
-
+      {/* Main Center Stage: Picture Frame & Controller */}
+      <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center">
+        {/* Luxury Frame Container */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] max-h-[580px] border-[10px] sm:border-[16px] border-neutral-900 rounded-3xl shadow-[0_30px_70px_rgba(0,0,0,0.95)] bg-neutral-950 overflow-hidden group">
           {/* Category Badge (Top-Left of Frame) */}
           <div className="absolute top-4 left-4 z-20">
-            <span className="px-3.5 py-1.5 rounded-full bg-black/75 border border-[#8d6e63]/40 backdrop-blur-md text-[11px] font-mono tracking-widest text-[#d7ccc8] uppercase shadow-lg">
+            <span className="px-3.5 py-1.5 rounded-full bg-black/75 border border-white/20 backdrop-blur-md text-[11px] font-mono tracking-widest text-neutral-300 uppercase shadow-lg">
               {currentPhoto.category}
             </span>
           </div>
@@ -189,7 +176,7 @@ export default function InteractiveGallerySection() {
           {/* Expand / Lightbox Button (Top-Right of Frame) */}
           <button
             onClick={() => setLightboxIndex(activePhotoIndex)}
-            className="absolute top-4 right-4 z-20 p-3 rounded-full bg-black/75 hover:bg-black border border-[#8d6e63]/40 backdrop-blur-md text-white transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer"
+            className="absolute top-4 right-4 z-20 p-3 rounded-full bg-black/75 hover:bg-black border border-white/20 backdrop-blur-md text-white transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer"
             title="Expand Fullscreen View"
           >
             <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -207,18 +194,18 @@ export default function InteractiveGallerySection() {
               src={currentPhoto.imageUrl}
               alt={currentPhoto.title}
               fill
-              sizes="(max-width: 1280px) 100vw, 1200px"
+              sizes="(max-width: 1280px) 100vw, 1400px"
               priority
               className="object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
             />
             {/* Subtle Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
           </div>
 
-          {/* Controller Arrow Overlay Buttons (Floating inside Frame Sides) */}
+          {/* Controller Arrow Overlay Buttons */}
           <button
             onClick={handlePrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3.5 rounded-full bg-black/60 hover:bg-[#3e2723] border border-[#8d6e63]/40 text-white/80 hover:text-white backdrop-blur-md transition-all duration-300 hover:scale-110 cursor-pointer"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3.5 rounded-full bg-black/60 hover:bg-black border border-white/20 text-white/80 hover:text-white backdrop-blur-md transition-all duration-300 hover:scale-110 cursor-pointer"
             title="Previous Image"
           >
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -228,7 +215,7 @@ export default function InteractiveGallerySection() {
 
           <button
             onClick={handleNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3.5 rounded-full bg-black/60 hover:bg-[#3e2723] border border-[#8d6e63]/40 text-white/80 hover:text-white backdrop-blur-md transition-all duration-300 hover:scale-110 cursor-pointer"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3.5 rounded-full bg-black/60 hover:bg-black border border-white/20 text-white/80 hover:text-white backdrop-blur-md transition-all duration-300 hover:scale-110 cursor-pointer"
             title="Next Image"
           >
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -237,47 +224,32 @@ export default function InteractiveGallerySection() {
           </button>
         </div>
 
-        {/* Photo Meta & Controller Bar */}
-        <div className="w-full mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 px-2 text-center sm:text-left">
-          {/* Metadata */}
-          <div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">
-              {currentPhoto.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-neutral-400 font-light mt-1 max-w-md">
-              {currentPhoto.description}
-            </p>
-          </div>
+        {/* Controller Bar */}
+        <div className="w-full mt-6 flex items-center justify-between gap-4 px-2">
+          {/* Index Counter */}
+          <span className="text-xs font-mono tracking-widest text-neutral-400">
+            {String(activePhotoIndex + 1).padStart(2, "0")} / {String(filteredPhotos.length).padStart(2, "0")}
+          </span>
 
-          {/* Controller Status Controls */}
-          <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 backdrop-blur-md">
-            {/* Index Counter */}
-            <span className="text-xs font-mono tracking-widest text-[#d7ccc8]">
-              {String(activePhotoIndex + 1).padStart(2, "0")} / {String(filteredPhotos.length).padStart(2, "0")}
-            </span>
-
-            <div className="h-4 w-[1px] bg-white/20" />
-
-            {/* Auto-Play Toggle Button */}
-            <button
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              className="text-xs text-neutral-300 hover:text-white flex items-center gap-1.5 tracking-wider uppercase font-mono transition-colors cursor-pointer"
-            >
-              {isAutoPlaying ? (
-                <>
-                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-                  Pause
-                </>
-              ) : (
-                <>
-                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                  Auto-Play
-                </>
-              )}
-            </button>
-          </div>
+          {/* Auto-Play Toggle Button */}
+          <button
+            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+            className="text-xs text-neutral-300 hover:text-white flex items-center gap-1.5 tracking-wider uppercase font-mono transition-colors cursor-pointer bg-white/5 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md"
+          >
+            {isAutoPlaying ? (
+              <>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                Pause
+              </>
+            ) : (
+              <>
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Auto-Play
+              </>
+            )}
+          </button>
         </div>
       </div>
 

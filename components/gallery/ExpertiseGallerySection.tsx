@@ -59,7 +59,7 @@ const EXPERTISE_PHOTOS: Photo[] = [
   {
     id: "exp-8",
     title: "Destination Fine Art",
-    category: "Travel",
+    category: "Fine Art",
     imageUrl: "/elvis-bekmanis-WJc87MVcDaA-unsplash.jpg",
     description: "Breathtaking scenic backdrop pairing couples with Sri Lanka's breathtaking natural landscapes.",
   },
@@ -70,36 +70,52 @@ const EXPERTISE_PHOTOS: Photo[] = [
     imageUrl: "/getulio-moraes-jbtbin3u0Xw-unsplash.jpg",
     description: "Pure elegance and fine art framing designed for heirloom wedding photo albums.",
   },
+  {
+    id: "exp-10",
+    title: "Serene Nature Portrait",
+    category: "Portrait",
+    imageUrl: "/luigi-pozzoli-jZrfY30y6Kc-unsplash.jpg",
+    description: "Serene portrait framed against dramatic mountain landscapes.",
+  },
+  {
+    id: "exp-11",
+    title: "Fine Art Silhouette",
+    category: "Fine Art",
+    imageUrl: "/ulyana-tim-AbnCRgL2DNs-unsplash.jpg",
+    description: "Dramatic shadow interplay and silhouette art.",
+  },
 ];
 
-const CATEGORIES = ["All Works", "Wedding", "Portrait", "Event", "Fine Art", "Love Story"];
+const CATEGORIES = ["ALL WORKS", "WEDDING", "PORTRAIT", "EVENT", "FINE ART", "LOVE STORY"];
 
 export default function ExpertiseGallerySection() {
-  const [activeCategory, setActiveCategory] = useState("All Works");
+  const [activeCategory, setActiveCategory] = useState("ALL WORKS");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filteredPhotos = useMemo(() => {
-    if (activeCategory === "All Works") return EXPERTISE_PHOTOS;
-    return EXPERTISE_PHOTOS.filter((photo) => photo.category === activeCategory);
+    if (activeCategory === "ALL WORKS") return EXPERTISE_PHOTOS;
+    return EXPERTISE_PHOTOS.filter(
+      (photo) => photo.category.toUpperCase() === activeCategory.toUpperCase()
+    );
   }, [activeCategory]);
 
   return (
-    <section className="relative w-full bg-black py-12 sm:py-16 px-3 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background Lighting Radial Gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
+    <section className="relative w-full bg-black py-8 sm:py-12 md:py-16 px-2 sm:px-4 md:px-6 overflow-hidden">
+      {/* Background Radial Gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.04)_0%,transparent_70%)] pointer-events-none z-0" />
 
       <div className="relative z-10 w-full">
-        {/* Category Filter Pills (Clean, Centered) */}
-        <div className="flex items-center justify-center flex-wrap gap-2.5 mb-8">
+        {/* Category Filter Pills (Clean, Centered, No Title Above) */}
+        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8">
           {CATEGORIES.map((category) => {
             const isActive = activeCategory === category;
             return (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-5 py-2 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                className={`px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                   isActive
-                    ? "bg-white text-black font-semibold shadow-lg shadow-white/10"
+                    ? "bg-white text-black shadow-lg shadow-white/10 scale-105"
                     : "bg-white/5 text-neutral-400 border border-white/10 hover:text-white hover:border-white/30 hover:bg-white/10"
                 }`}
               >
@@ -110,24 +126,24 @@ export default function ExpertiseGallerySection() {
         </div>
 
         {/* Full-Width Aligned Fixed Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 sm:gap-4 w-full">
           {filteredPhotos.map((photo, index) => {
             return (
               <div
                 key={photo.id}
                 onClick={() => setLightboxIndex(index)}
-                className="group relative w-full h-[320px] sm:h-[380px] md:h-[400px] rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 cursor-pointer transition-all duration-500 hover:border-white/40 shadow-xl"
+                className="group relative w-full h-[300px] sm:h-[360px] md:h-[400px] rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 cursor-pointer transition-all duration-500 hover:border-white/40 shadow-xl"
               >
-                {/* Clean Pure Image */}
+                {/* Pure Clean Image - No Text Overlays */}
                 <Image
                   src={photo.imageUrl}
                   alt={photo.title}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
-                {/* Subtle Ambient Hover Overlay & Minimal View Icon */}
+                {/* Ambient Hover Lighting & Minimal Zoom Icon Only */}
                 <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="p-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-white transform scale-90 group-hover:scale-100 transition-all duration-300 shadow-xl">
                     <Maximize2 className="w-5 h-5" />
@@ -149,3 +165,4 @@ export default function ExpertiseGallerySection() {
     </section>
   );
 }
+
