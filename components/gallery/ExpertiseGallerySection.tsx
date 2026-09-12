@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import { Photo } from "@/types";
 import { PhotoLightboxModal } from "@/components/ui";
-import { Maximize2, Sparkles } from "lucide-react";
+import { Maximize2 } from "lucide-react";
 
 const EXPERTISE_PHOTOS: Photo[] = [
   {
@@ -84,29 +84,13 @@ export default function ExpertiseGallerySection() {
   }, [activeCategory]);
 
   return (
-    <section className="relative w-full bg-black py-20 sm:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative w-full bg-black py-12 sm:py-16 px-3 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background Lighting Radial Gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.06)_0%,transparent_70%)] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-neutral-300 text-xs font-mono uppercase tracking-[0.3em] mb-4 backdrop-blur-sm">
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            <span>Photographer Expertise & Portfolio</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
-            Crafting Timeless Moments
-          </h2>
-
-          <p className="mt-4 text-xs sm:text-sm md:text-base text-neutral-400 font-light leading-relaxed max-w-2xl mx-auto">
-            Explore a curated showcase of Bandula Senadheera&apos;s finest imagery—demonstrating light control, candid emotional depth, and artistic framing.
-          </p>
-        </div>
-
-        {/* Filter Category Pills */}
-        <div className="flex items-center justify-center flex-wrap gap-2.5 mb-12">
+      <div className="relative z-10 w-full">
+        {/* Category Filter Pills (Clean, Centered) */}
+        <div className="flex items-center justify-center flex-wrap gap-2.5 mb-8">
           {CATEGORIES.map((category) => {
             const isActive = activeCategory === category;
             return (
@@ -125,54 +109,29 @@ export default function ExpertiseGallerySection() {
           })}
         </div>
 
-        {/* Bento Grid Showcase */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Full-Width Aligned Fixed Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
           {filteredPhotos.map((photo, index) => {
-            // Give specific cards larger bento sizing for layout variety
-            const isFeatured = index === 0;
-            const isWide = index === 3;
-
             return (
               <div
                 key={photo.id}
                 onClick={() => setLightboxIndex(index)}
-                className={`group relative rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 cursor-pointer transition-all duration-500 hover:border-white/30 shadow-xl ${
-                  isFeatured ? "sm:col-span-2 lg:col-span-2 sm:row-span-2 h-[450px] sm:h-[580px]" : isWide ? "sm:col-span-2 lg:col-span-2 h-[320px] sm:h-[380px]" : "h-[320px] sm:h-[380px]"
-                }`}
+                className="group relative w-full h-[320px] sm:h-[380px] md:h-[400px] rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 cursor-pointer transition-all duration-500 hover:border-white/40 shadow-xl"
               >
-                {/* Background Image */}
+                {/* Clean Pure Image */}
                 <Image
                   src={photo.imageUrl}
                   alt={photo.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                   className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
-                {/* High Contrast Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-                {/* Top Category Badge & Lightbox Icon */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                  <span className="px-3.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-mono text-white uppercase tracking-widest">
-                    {photo.category}
-                  </span>
-
-                  <span className="p-2 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/80 group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-
-                {/* Bottom Content Info */}
-                <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 z-10 transform transition-transform duration-500">
-                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2 group-hover:text-amber-100 transition-colors">
-                    {photo.title}
-                  </h3>
-                  {photo.description && (
-                    <p className="text-xs sm:text-sm text-neutral-300 font-light line-clamp-2 leading-relaxed">
-                      {photo.description}
-                    </p>
-                  )}
+                {/* Subtle Ambient Hover Overlay & Minimal View Icon */}
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="p-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-white transform scale-90 group-hover:scale-100 transition-all duration-300 shadow-xl">
+                    <Maximize2 className="w-5 h-5" />
+                  </div>
                 </div>
               </div>
             );
