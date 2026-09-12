@@ -7,6 +7,8 @@ import {
   MarqueeGallerySection,
   ServicesSplitSection,
   InteractiveGallerySection,
+  ExpertiseGallerySection,
+  VisualDiarySliderSection,
 } from "@/components/gallery";
 import { Footer } from "@/components/layout";
 import { SITE_CONFIG } from "@/constants";
@@ -206,7 +208,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 2: Split-Screen Photography Services (Weddings & Events) */}
+        {/* Section 2: Visual Diary 3D Cover Flow Carousel & Full Screen Collection Viewer */}
+        <div id="expertise">
+          <VisualDiarySliderSection />
+        </div>
+
+        {/* Section 3: Split-Screen Photography Services (Weddings & Events) */}
         <div id="services">
           <ServicesSplitSection />
         </div>
