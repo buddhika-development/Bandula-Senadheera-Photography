@@ -8,88 +8,97 @@ import { Maximize2 } from "lucide-react";
 
 interface GalleryPhoto extends Photo {
   aspectClass?: string;
-  colIndex: number; // 0, 1, 2, 3 for 4-column layout mapping
+  colIndex: number;
 }
 
 const MASONRY_PORTFOLIO_PHOTOS: GalleryPhoto[] = [
-  // Column 1 Photos
   {
-    id: "sl-1",
-    title: "Kandyan Bridal Elegance",
+    id: "gallery-1",
+    title: "Eternal Bridal Promises",
     category: "Wedding",
-    imageUrl: "/sl_wedding_1.jpg",
+    imageUrl: "/jeremy-wong-weddings-464ps_nOflw-unsplash.jpg",
     aspectClass: "h-[380px] sm:h-[440px]",
     colIndex: 0,
   },
   {
-    id: "sl-2",
-    title: "Intricate Kandyan Jewelry",
+    id: "gallery-2",
+    title: "Golden Hour Embrace",
     category: "Wedding",
-    imageUrl: "/sl_wedding_2.jpg",
-    aspectClass: "h-[320px] sm:h-[380px]",
-    colIndex: 0,
-  },
-
-  // Column 2 Photos
-  {
-    id: "sl-3",
-    title: "Bridal Preparation",
-    category: "Wedding",
-    imageUrl: "/sl_wedding_3.jpg",
-    aspectClass: "h-[180px] sm:h-[220px]",
-    colIndex: 1,
-  },
-  {
-    id: "sl-4",
-    title: "Royal Purple Fine Art Gown",
-    category: "Fine Art",
-    imageUrl: "/sl_wedding_4.jpg",
+    imageUrl: "/jonathan-borba-mvasDnG41is-unsplash.jpg",
     aspectClass: "h-[400px] sm:h-[480px]",
     colIndex: 1,
   },
   {
-    id: "sl-5",
-    title: "Atmospheric Wood Lighting",
+    id: "gallery-3",
+    title: "Cinematic Portraiture",
+    category: "Portrait",
+    imageUrl: "/hisu-lee-FTW8ADj5igs-unsplash.jpg",
+    aspectClass: "h-[380px] sm:h-[440px]",
+    colIndex: 2,
+  },
+  {
+    id: "gallery-4",
+    title: "Fine Art Silhouette",
+    category: "Portrait",
+    imageUrl: "/ulyana-tim-AbnCRgL2DNs-unsplash.jpg",
+    aspectClass: "h-[380px] sm:h-[440px]",
+    colIndex: 3,
+  },
+  {
+    id: "gallery-5",
+    title: "Timeless Bridal Devotion",
+    category: "Wedding",
+    imageUrl: "/getulio-moraes-jbtbin3u0Xw-unsplash.jpg",
+    aspectClass: "h-[320px] sm:h-[380px]",
+    colIndex: 0,
+  },
+  {
+    id: "gallery-6",
+    title: "Unscripted Romance",
     category: "Love Story",
-    imageUrl: "/sl_wedding_5.jpg",
+    imageUrl: "/jonathan-borba-aC5_EFhq7Fs-unsplash.jpg",
+    aspectClass: "h-[320px] sm:h-[380px]",
+    colIndex: 1,
+  },
+  {
+    id: "gallery-7",
+    title: "Gala Celebration Atmosphere",
+    category: "Event",
+    imageUrl: "/sandy-millar-8vaQKYnawHw-unsplash.jpg",
+    aspectClass: "h-[320px] sm:h-[380px]",
+    colIndex: 2,
+  },
+  {
+    id: "gallery-8",
+    title: "Electric Stage Emotion",
+    category: "Event",
+    imageUrl: "/jakob-owens-mLIurLmSRAY-unsplash.jpg",
+    aspectClass: "h-[320px] sm:h-[380px]",
+    colIndex: 3,
+  },
+  {
+    id: "gallery-9",
+    title: "Dramatic Shadow Play",
+    category: "Fine Art",
+    imageUrl: "/nikita-shirokov-7wjxyiUvt4I-unsplash.jpg",
     aspectClass: "h-[220px] sm:h-[260px]",
     colIndex: 1,
   },
-
-  // Column 3 Photos
   {
-    id: "sl-6",
-    title: "Ethereal Veil Portrait",
-    category: "Portrait",
-    imageUrl: "/sl_wedding_6.jpg",
-    aspectClass: "h-[380px] sm:h-[440px]",
+    id: "gallery-10",
+    title: "Coastal Wanderer Horizon",
+    category: "Editorial",
+    imageUrl: "/elvis-bekmanis-WJc87MVcDaA-unsplash.jpg",
+    aspectClass: "h-[280px] sm:h-[320px]",
+    colIndex: 0,
+  },
+  {
+    id: "gallery-11",
+    title: "Untamed Mountain Serenity",
+    category: "Landscape",
+    imageUrl: "/luigi-pozzoli-jZrfY30y6Kc-unsplash.jpg",
+    aspectClass: "h-[280px] sm:h-[320px]",
     colIndex: 2,
-  },
-  {
-    id: "sl-7",
-    title: "Outdoor Garden Couple",
-    category: "Wedding",
-    imageUrl: "/sl_wedding_7.jpg",
-    aspectClass: "h-[320px] sm:h-[380px]",
-    colIndex: 2,
-  },
-
-  // Column 4 Photos
-  {
-    id: "sl-8",
-    title: "Golden Throne Heirloom Bride",
-    category: "Wedding",
-    imageUrl: "/sl_wedding_8.jpg",
-    aspectClass: "h-[380px] sm:h-[440px]",
-    colIndex: 3,
-  },
-  {
-    id: "sl-9",
-    title: "Velvet & Lace Romance",
-    category: "Wedding",
-    imageUrl: "/sl_wedding_9.jpg",
-    aspectClass: "h-[320px] sm:h-[380px]",
-    colIndex: 3,
   },
 ];
 
@@ -101,12 +110,17 @@ export default function InteractiveGallerySection() {
 
   const filteredPhotos = useMemo(() => {
     if (selectedCategory === "ALL WORKS") return MASONRY_PORTFOLIO_PHOTOS;
-    return MASONRY_PORTFOLIO_PHOTOS.filter(
-      (photo) => photo.category.toUpperCase() === selectedCategory.toUpperCase()
-    );
+    return MASONRY_PORTFOLIO_PHOTOS.filter((photo) => {
+      if (selectedCategory === "WEDDING") return photo.category === "Wedding" || photo.category === "Love Story";
+      if (selectedCategory === "PORTRAIT") return photo.category === "Portrait";
+      if (selectedCategory === "EVENT") return photo.category === "Event";
+      if (selectedCategory === "FINE ART") return photo.category === "Fine Art" || photo.category === "Editorial";
+      if (selectedCategory === "LOVE STORY") return photo.category === "Love Story";
+      return photo.category.toUpperCase() === selectedCategory.toUpperCase();
+    });
   }, [selectedCategory]);
 
-  // Distribute filtered photos into 4 columns for exact masonry alignment
+  // Distribute filtered photos across 4 masonry grid columns
   const columns = useMemo(() => {
     const col0: GalleryPhoto[] = [];
     const col1: GalleryPhoto[] = [];
@@ -126,31 +140,12 @@ export default function InteractiveGallerySection() {
 
   return (
     <section className="relative w-full bg-black py-12 sm:py-16 md:py-24 px-2 sm:px-4 md:px-6 overflow-hidden">
-      {/* Background Radial Ambient Glow */}
+      {/* Background Radial Ambient Lighting */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,transparent_70%)] pointer-events-none z-0" />
 
       <div className="relative z-10 w-full max-w-[1920px] mx-auto">
-        {/* Category Filter Pills (Clean, Centered) */}
-        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-8 sm:mb-12">
-          {CATEGORIES.map((cat) => {
-            const isActive = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                  isActive
-                    ? "bg-white text-black shadow-lg shadow-white/10 scale-105"
-                    : "bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:border-white/30 hover:bg-white/10"
-                }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
 
-        {/* 4-Column Editorial Masonry Layout matching reference image */}
+        {/* 4-Column Editorial Masonry Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full">
           {columns.map((colPhotos, colIdx) => (
             <div key={`col-${colIdx}`} className="flex flex-col gap-3 sm:gap-4">
@@ -162,7 +157,7 @@ export default function InteractiveGallerySection() {
                     onClick={() => setLightboxIndex(globalIndex)}
                     className={`group relative w-full ${photo.aspectClass} rounded-2xl overflow-hidden border border-white/10 bg-neutral-950 cursor-pointer shadow-xl transition-all duration-500 hover:border-white/40`}
                   >
-                    {/* Pure High-Res Photo - No Text Overlays */}
+                    {/* Pure High-Res Photo */}
                     <Image
                       src={photo.imageUrl}
                       alt={photo.title}

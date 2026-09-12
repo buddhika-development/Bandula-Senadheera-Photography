@@ -1,218 +1,193 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ArrowRight, Play, Pause, Maximize2 } from "lucide-react";
-import { Photo } from "@/types";
+import { ChevronLeft, ChevronRight, Play, Pause, MapPin, Maximize2 } from "lucide-react";
 import { FullScreenCollectionModal, PhotoCollection } from "@/components/ui";
 
-const DUAL_SHOWCASE_PHOTOS: Photo[] = [
+interface ShowcaseSlide {
+  id: string;
+  couple: string;
+  event: string;
+  location: string;
+  category: string;
+  imageUrl: string;
+}
+
+const SHOWCASE_SLIDES: ShowcaseSlide[] = [
   {
-    id: "dual-1",
-    title: "Eternal Bridal Moment",
-    category: "Wedding",
-    imageUrl: "/jeremy-wong-weddings-464ps_nOflw-unsplash.jpg",
+    id: "slide-1",
+    couple: "Kavinda & Dilini",
+    event: "Highland Sanctuary Destination Wedding",
+    location: "Nuwara Eliya, Sri Lanka",
+    category: "Luxury Wedding",
+    imageUrl: "/550park-luxury-wedding-films-CvNj1vubkIA-unsplash.jpg",
   },
   {
-    id: "dual-2",
-    title: "Golden Hour Embrace",
-    category: "Wedding",
-    imageUrl: "/jonathan-borba-mvasDnG41is-unsplash.jpg",
+    id: "slide-2",
+    couple: "Roshan & Nimasha",
+    event: "Golden Hour Oceanfront Vows",
+    location: "Mirissa Coast, Sri Lanka",
+    category: "Beach Wedding",
+    imageUrl: "/camila-cordeiro-haRyBAihS_0-unsplash.jpg",
   },
   {
-    id: "dual-3",
-    title: "Cinematic Portraiture",
-    category: "Portrait",
-    imageUrl: "/hisu-lee-FTW8ADj5igs-unsplash.jpg",
-  },
-  {
-    id: "dual-4",
-    title: "Electric Gala Celebration",
-    category: "Event",
-    imageUrl: "/sandy-millar-8vaQKYnawHw-unsplash.jpg",
-  },
-  {
-    id: "dual-5",
-    title: "Authentic Unscripted Romance",
-    category: "Love Story",
-    imageUrl: "/jonathan-borba-aC5_EFhq7Fs-unsplash.jpg",
-  },
-  {
-    id: "dual-6",
-    title: "Fine Art Shadow Play",
-    category: "Fine Art",
-    imageUrl: "/nikita-shirokov-7wjxyiUvt4I-unsplash.jpg",
-  },
-  {
-    id: "dual-7",
-    title: "Destination Horizon",
-    category: "Travel",
-    imageUrl: "/elvis-bekmanis-WJc87MVcDaA-unsplash.jpg",
-  },
-  {
-    id: "dual-8",
-    title: "Mountain Serenity",
-    category: "Landscape",
-    imageUrl: "/luigi-pozzoli-jZrfY30y6Kc-unsplash.jpg",
-  },
-  {
-    id: "dual-9",
-    title: "Pure Heirloom Elegance",
-    category: "Wedding",
-    imageUrl: "/getulio-moraes-jbtbin3u0Xw-unsplash.jpg",
-  },
-  {
-    id: "dual-10",
-    title: "Fine Art Silhouette",
-    category: "Portrait",
-    imageUrl: "/ulyana-tim-AbnCRgL2DNs-unsplash.jpg",
-  },
+    id: "slide-3",
+    couple: "Sahan & Rashmi",
+    event: "Authentic Unscripted Romance",
+    location: "Kandy Botanical Gardens",
+    category: "Pre-Wedding Session",
+    imageUrl: "/eugenia-pan-kiv-1Bs2sZ9fD2Q-unsplash.jpg",
+  }
 ];
 
 const COLLECTIONS: PhotoCollection[] = [
   {
     id: "luxury-weddings",
     name: "Luxury Weddings",
-    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Wedding"),
-  },
-  {
-    id: "cinematic-portraits",
-    name: "Cinematic Portraits",
-    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Portrait"),
-  },
-  {
-    id: "grand-events",
-    name: "Grand Events",
-    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Event"),
-  },
-  {
-    id: "fine-art-editorial",
-    name: "Fine Art Editorial",
-    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Fine Art"),
-  },
-  {
-    id: "destination-stories",
-    name: "Destination Stories",
-    photos: DUAL_SHOWCASE_PHOTOS.filter((p) => p.category === "Travel" || p.category === "Landscape"),
+    photos: SHOWCASE_SLIDES.map((slide) => ({
+      id: slide.id,
+      title: `${slide.couple} - ${slide.event}`,
+      category: slide.category,
+      imageUrl: slide.imageUrl,
+    })),
   },
 ];
 
 export default function VisualDiarySliderSection() {
-  const [leftIndex, setLeftIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isFullScreenOpen, setIsFullScreenOpen] = useState(false);
-  const [fullScreenCollectionId, setFullScreenCollectionId] = useState("luxury-weddings");
 
-  const total = DUAL_SHOWCASE_PHOTOS.length;
-  const rightIndex = (leftIndex + 1) % total;
+  const total = SHOWCASE_SLIDES.length;
+  const currentSlide = SHOWCASE_SLIDES[currentIndex];
 
-  const leftPhoto = DUAL_SHOWCASE_PHOTOS[leftIndex];
-  const rightPhoto = DUAL_SHOWCASE_PHOTOS[rightIndex];
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % total);
+  }, [total]);
+
+  const handlePrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + total) % total);
+  }, [total]);
 
   // Automatic slideshow transition
   useEffect(() => {
     if (!isAutoPlaying) return;
-
     const interval = setInterval(() => {
-      setLeftIndex((prev) => (prev + 1) % total);
-    }, 3800);
-
+      handleNext();
+    }, 4500);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, total]);
+  }, [isAutoPlaying, handleNext]);
 
-  const handlePrev = () => {
-    setLeftIndex((prev) => (prev - 1 + total) % total);
-  };
-
-  const handleNext = () => {
-    setLeftIndex((prev) => (prev + 1) % total);
-  };
-
-  const openFullScreenModal = () => {
-    setIsFullScreenOpen(true);
-  };
+  // Keyboard arrow navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        handlePrev();
+      } else if (e.key === "ArrowRight") {
+        handleNext();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrev]);
 
   return (
-    <section className="relative w-full bg-black py-10 sm:py-16 md:py-24 px-3 sm:px-6 md:px-10 overflow-hidden">
-      {/* Background Radial Ambient Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04)_0%,transparent_70%)] pointer-events-none z-0" />
-
-      <div className="relative z-10 w-full max-w-[1920px] mx-auto flex flex-col items-center">
-        {/* Dual Split-Screen Section (Left-Handed & Right-Handed Image Frames) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 w-full">
-          {/* Left-Handed Image Section */}
+    <section className="relative w-full h-screen min-h-[600px] bg-black overflow-hidden group select-none">
+      {/* Background Full-Screen Image Showcase */}
+      <div className="absolute inset-0 w-full h-full">
+        {SHOWCASE_SLIDES.map((slide, index) => (
           <div
-            onClick={openFullScreenModal}
-            className="group relative w-full h-[450px] sm:h-[600px] md:h-[700px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/15 bg-neutral-950 cursor-pointer shadow-2xl transition-all duration-500 hover:border-white/40"
+            key={slide.id}
+            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${index === currentIndex ? "opacity-100 z-0" : "opacity-0 -z-10 pointer-events-none"
+              }`}
           >
             <Image
-              key={`left-${leftPhoto.id}`}
-              src={leftPhoto.imageUrl}
-              alt={leftPhoto.title}
+              src={slide.imageUrl}
+              alt={`${slide.couple} - ${slide.event}`}
               fill
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover object-center w-full h-full transition-all duration-1000 ease-out group-hover:scale-105"
+              priority={index === 0}
+              sizes="100vw"
+              className="object-cover object-center w-full h-full transition-transform duration-1000 ease-out group-hover:scale-105"
             />
-            {/* Ambient Hover Overlay & Minimal View Icon */}
-            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <div className="p-4 rounded-full bg-black/70 border border-white/30 text-white backdrop-blur-md transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-2xl">
-                <Maximize2 className="w-6 h-6" />
-              </div>
-            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Overlay: Bottom to Middle Gradient Overlay with Couple & Event Info */}
+      {/* Hides on hover on desktop (opacity-100 group-hover:opacity-0), and hidden on mobile (hidden md:flex) */}
+      <div className="hidden md:flex flex-col justify-end absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/95 via-black/60 via-50% to-transparent pointer-events-none transition-opacity duration-500 opacity-100 group-hover:opacity-0 z-10 px-8 lg:px-20 pb-28">
+        <div className="max-w-3xl space-y-3 transform translate-y-0 transition-transform duration-500">
+          {/* Badge & Location */}
+          <div className="flex items-center gap-3">
+            <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs tracking-widest uppercase font-mono backdrop-blur-md">
+              {currentSlide.category}
+            </span>
+            <span className="text-neutral-300 text-xs flex items-center gap-1.5 font-light tracking-wide">
+              <MapPin className="w-3.5 h-3.5 text-neutral-400" />
+              {currentSlide.location}
+            </span>
           </div>
 
-          {/* Right-Handed Image Section */}
-          <div
-            onClick={openFullScreenModal}
-            className="group relative w-full h-[450px] sm:h-[600px] md:h-[700px] lg:h-[760px] rounded-3xl overflow-hidden border border-white/15 bg-neutral-950 cursor-pointer shadow-2xl transition-all duration-500 hover:border-white/40"
-          >
-            <Image
-              key={`right-${rightPhoto.id}`}
-              src={rightPhoto.imageUrl}
-              alt={rightPhoto.title}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover object-center w-full h-full transition-all duration-1000 ease-out group-hover:scale-105"
+          {/* Couple Name */}
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif text-white tracking-wide drop-shadow-2xl font-normal leading-none">
+            {currentSlide.couple}
+          </h2>
+
+          {/* Event Title */}
+          <p className="text-sm md:text-lg text-neutral-300 tracking-wider font-light uppercase drop-shadow-md">
+            {currentSlide.event}
+          </p>
+        </div>
+      </div>
+
+      {/* Manual Navigation Controls: Side Navigation Arrows */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-full bg-black/40 border border-white/20 text-white/80 hover:text-white hover:bg-black/75 hover:scale-110 hover:border-white/50 backdrop-blur-md transition-all duration-300 cursor-pointer shadow-2xl group/btn"
+        aria-label="Previous Image"
+        title="Previous Image"
+      >
+        <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 transition-transform group-hover/btn:-translate-x-0.5" />
+      </button>
+
+      <button
+        onClick={handleNext}
+        className="absolute right-4 md:left-auto md:right-8 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-full bg-black/40 border border-white/20 text-white/80 hover:text-white hover:bg-black/75 hover:scale-110 hover:border-white/50 backdrop-blur-md transition-all duration-300 cursor-pointer shadow-2xl group/btn"
+        aria-label="Next Image"
+        title="Next Image"
+      >
+        <ChevronRight className="w-6 h-6 md:w-8 md:h-8 transition-transform group-hover/btn:translate-x-0.5" />
+      </button>
+
+      {/* Bottom Manual Control Bar: Slide Indicators, Counter & Autoplay Controls */}
+      <div className="absolute bottom-6 inset-x-0 z-30 px-6 md:px-16 flex items-center justify-between gap-4">
+        {/* Left / Center: Interactive Slide Indicator Bars */}
+        <div className="flex items-center gap-2 bg-black/40 border border-white/15 rounded-full px-4 py-2.5 backdrop-blur-md">
+          {SHOWCASE_SLIDES.map((slide, index) => (
+            <button
+              key={slide.id}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${index === currentIndex
+                ? "w-8 bg-white"
+                : "w-2.5 bg-white/30 hover:bg-white/70"
+                }`}
+              title={`Go to ${slide.couple}`}
+              aria-label={`Go to slide ${index + 1}`}
             />
-            {/* Ambient Hover Overlay & Minimal View Icon */}
-            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <div className="p-4 rounded-full bg-black/70 border border-white/30 text-white backdrop-blur-md transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-2xl">
-                <Maximize2 className="w-6 h-6" />
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Controllers Bar & Bottom View Full Gallery CTA */}
-        <div className="mt-8 sm:mt-12 w-full flex flex-col sm:flex-row items-center justify-between gap-6 px-2">
-          {/* Left / Center Controllers */}
-          <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 backdrop-blur-md">
-            {/* Prev Arrow */}
-            <button
-              onClick={handlePrev}
-              className="p-2 rounded-full hover:bg-white/10 text-neutral-300 hover:text-white transition-colors cursor-pointer"
-              title="Previous Images"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
+        {/* Right: Slide Counter, Auto-Play Toggle & Full Screen Modal Button */}
+        <div className="flex items-center gap-3">
+          {/* Controls Capsule */}
+          <div className="flex items-center gap-3.5 bg-black/40 border border-white/15 rounded-full px-4 py-2 backdrop-blur-md">
             {/* Counter */}
-            <span className="text-xs font-mono tracking-widest text-neutral-300">
-              {String(leftIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            <span className="text-xs font-mono tracking-widest text-neutral-200">
+              {String(currentIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
             </span>
 
-            {/* Next Arrow */}
-            <button
-              onClick={handleNext}
-              className="p-2 rounded-full hover:bg-white/10 text-neutral-300 hover:text-white transition-colors cursor-pointer"
-              title="Next Images"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            <div className="h-4 w-[1px] bg-white/20" />
+            <div className="h-3.5 w-[1px] bg-white/20" />
 
             {/* Auto-Play Toggle */}
             <button
@@ -223,35 +198,35 @@ export default function VisualDiarySliderSection() {
               {isAutoPlaying ? (
                 <>
                   <Pause className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Auto On</span>
+                  <span className="hidden sm:inline">Auto</span>
                 </>
               ) : (
                 <>
-                  <Play className="w-3.5 h-3.5" />
-                  <span>Auto Off</span>
+                  <Play className="w-3.5 h-3.5 text-neutral-400" />
+                  <span className="hidden sm:inline">Paused</span>
                 </>
               )}
             </button>
           </div>
 
-          {/* Primary View Full Gallery Button positioned at the bottom */}
+          {/* Full Screen View Modal Button */}
           <button
-            onClick={openFullScreenModal}
-            className="px-8 py-3.5 rounded-full bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-neutral-200 hover:scale-105 transition-all duration-300 shadow-xl shadow-white/10 flex items-center gap-2.5 cursor-pointer group"
+            onClick={() => setIsFullScreenOpen(true)}
+            className="p-2.5 rounded-full bg-black/40 border border-white/15 text-white/80 hover:text-white hover:bg-black/75 hover:scale-105 border-white/30 backdrop-blur-md transition-all duration-300 cursor-pointer hidden sm:flex items-center justify-center"
+            title="Expand Full Screen Gallery"
           >
-            <span>View Full Gallery</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <Maximize2 className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* 100vw x 100vh Full Screen Immersive Gallery Modal */}
+      {/* Full Screen Immersive Gallery Modal */}
       <FullScreenCollectionModal
         isOpen={isFullScreenOpen}
         onClose={() => setIsFullScreenOpen(false)}
         collections={COLLECTIONS}
-        initialCollectionId={fullScreenCollectionId}
-        initialPhotoIndex={leftIndex}
+        initialCollectionId="luxury-weddings"
+        initialPhotoIndex={currentIndex}
       />
     </section>
   );
