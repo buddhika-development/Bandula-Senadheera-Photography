@@ -108,7 +108,7 @@ export default function VisualDiarySliderSection() {
               fill
               priority={index === 0}
               quality={95}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+              sizes="(max-width: 768px) 300vw, (max-width: 1024px) 200vw, 100vw"
               className="object-cover object-center w-full h-full transition-transform duration-1000 ease-out group-hover:scale-105"
             />
           </div>
