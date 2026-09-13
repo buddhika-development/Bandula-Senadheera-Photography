@@ -21,7 +21,7 @@ const SHOWCASE_SLIDES: ShowcaseSlide[] = [
     event: "Highland Sanctuary Destination Wedding",
     location: "Nuwara Eliya, Sri Lanka",
     category: "Luxury Wedding",
-    imageUrl: "/550park-luxury-wedding-films-CvNj1vubkIA-unsplash.jpg",
+    imageUrl: "/christian-diaz-Tg_Du1s-WU0-unsplash.jpg",
   },
   {
     id: "slide-2",
@@ -29,7 +29,7 @@ const SHOWCASE_SLIDES: ShowcaseSlide[] = [
     event: "Golden Hour Oceanfront Vows",
     location: "Mirissa Coast, Sri Lanka",
     category: "Beach Wedding",
-    imageUrl: "/camila-cordeiro-haRyBAihS_0-unsplash.jpg",
+    imageUrl: "/serhat-tug-e0cQXXFJcyg-unsplash.jpg",
   },
   {
     id: "slide-3",
@@ -37,7 +37,7 @@ const SHOWCASE_SLIDES: ShowcaseSlide[] = [
     event: "Authentic Unscripted Romance",
     location: "Kandy Botanical Gardens",
     category: "Pre-Wedding Session",
-    imageUrl: "/eugenia-pan-kiv-1Bs2sZ9fD2Q-unsplash.jpg",
+    imageUrl: "/adrianna-geo-h6rEaQXt-bY-unsplash.jpg",
   }
 ];
 
