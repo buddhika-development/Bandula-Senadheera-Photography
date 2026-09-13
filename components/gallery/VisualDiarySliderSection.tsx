@@ -107,7 +107,8 @@ export default function VisualDiarySliderSection() {
               alt={`${slide.couple} - ${slide.event}`}
               fill
               priority={index === 0}
-              sizes="100vw"
+              quality={95}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
               className="object-cover object-center w-full h-full transition-transform duration-1000 ease-out group-hover:scale-105"
             />
           </div>
