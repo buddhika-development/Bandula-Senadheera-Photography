@@ -48,8 +48,26 @@ export default function ServicesSplitSection() {
             className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-110"
           />
 
-          {/* Bottom-to-Middle Gradient Overlay for Maximum Text Visibility (matches VisualDiarySliderSection) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 via-50% to-transparent group-hover:from-black group-hover:via-black/70 transition-colors duration-500" />
+          {/* Bottom-to-Middle Gradient Overlay for Maximum Text Visibility.
+              Uses an explicit sRGB linear-gradient (inline style) instead of Tailwind's
+              gradient utilities: Tailwind v4 compiles those with `in oklab` interpolation
+              + `color-mix()`, which older mobile browsers (< Chrome 111) don't support,
+              so the whole gradient is dropped and the overlay disappears on mobile. */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%)",
+            }}
+          />
+          {/* Extra darkening on hover (desktop), when the description + buttons reveal */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,0) 100%)",
+            }}
+          />
 
           {/* Content Box */}
           <div className="relative z-10 h-full p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
@@ -130,8 +148,26 @@ export default function ServicesSplitSection() {
             className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-110"
           />
 
-          {/* Bottom-to-Middle Gradient Overlay for Maximum Text Visibility (matches VisualDiarySliderSection) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 via-50% to-transparent group-hover:from-black group-hover:via-black/70 transition-colors duration-500" />
+          {/* Bottom-to-Middle Gradient Overlay for Maximum Text Visibility.
+              Uses an explicit sRGB linear-gradient (inline style) instead of Tailwind's
+              gradient utilities: Tailwind v4 compiles those with `in oklab` interpolation
+              + `color-mix()`, which older mobile browsers (< Chrome 111) don't support,
+              so the whole gradient is dropped and the overlay disappears on mobile. */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%)",
+            }}
+          />
+          {/* Extra darkening on hover (desktop), when the description + buttons reveal */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,0) 100%)",
+            }}
+          />
 
           {/* Content Box */}
           <div className="relative z-10 h-full p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
