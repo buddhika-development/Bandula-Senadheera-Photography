@@ -48,8 +48,8 @@ export default function ServicesSplitSection() {
             className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-110"
           />
 
-          {/* High-Contrast Dark Gradient Overlay for Maximum Text Visibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40 lg:from-black lg:via-black/60 lg:to-black/30 group-hover:via-black/70 transition-colors duration-500" />
+          {/* Bottom-to-Middle Gradient Overlay for Maximum Text Visibility (matches VisualDiarySliderSection) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 via-50% to-transparent group-hover:from-black group-hover:via-black/70 transition-colors duration-500" />
 
           {/* Content Box */}
           <div className="relative z-10 h-full p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
@@ -130,8 +130,8 @@ export default function ServicesSplitSection() {
             className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-110"
           />
 
-          {/* High-Contrast Dark Gradient Overlay for Maximum Text Visibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40 lg:from-black lg:via-black/60 lg:to-black/30 group-hover:via-black/70 transition-colors duration-500" />
+          {/* Bottom-to-Middle Gradient Overlay for Maximum Text Visibility (matches VisualDiarySliderSection) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 via-50% to-transparent group-hover:from-black group-hover:via-black/70 transition-colors duration-500" />
 
           {/* Content Box */}
           <div className="relative z-10 h-full p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
